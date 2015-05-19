@@ -1,0 +1,6 @@
+framework module YandexMoneySDKiOS {
+  umbrella header "Pods-YandexMoneySDKiOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
