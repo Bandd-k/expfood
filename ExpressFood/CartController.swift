@@ -25,24 +25,25 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
         super.viewDidLoad()
         let mycart = Cart.sharedCart()
         products = mycart.products
+        sum = CalculateSum()
+        MakeOrderButton.frame.size.width = self.view.frame.size.width
+        MainTable.frame.size.width = self.view.frame.size.width
+        MakeOrderButton.titleLabel?.numberOfLines = 1;
+        MakeOrderButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        MakeOrderButton.titleLabel?.minimumScaleFactor = 3
+        MakeOrderButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByClipping
         if(products.count == 0){
-            MakeOrderButton.titleLabel?.numberOfLines = 1;
-            MakeOrderButton.titleLabel?.adjustsFontSizeToFitWidth = true
-            MakeOrderButton.titleLabel?.minimumScaleFactor = 3
-            MakeOrderButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByClipping
             //MakeOrderButton.titleLabel?.textAlignment = NSTextAlignment.Center
             MakeOrderButton.setTitle("Добавьте товаров в корзину !", forState: UIControlState.Normal)
         }
         //SendOrder()
-        
-        MakeOrderButton.setTitleColor(UIColor(red: 102.0/255.0, green: 204.0/255.0, blue:
-            102.0/255.0, alpha: 1), forState: UIControlState.Normal)
-        
-
+        MakeOrderButton.setBackgroundImage(UIImage(named: "cartBackground.png"), forState: UIControlState.Normal)
+        MakeOrderButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
 
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(animated: Bool) {
+        sum = CalculateSum()
         if(self.pushed == 1){
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.pushed = 0
@@ -71,7 +72,7 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
     func didDeleteItem() {
         let mycart = Cart.sharedCart()
         products = mycart.products
-        sum = 0
+        sum = CalculateSum()
         MainTable.reloadData()
         if(products.count == 0 ){
         MakeOrderButton.setTitle("Добавьте товаров в корзину !", forState: UIControlState.Normal)
@@ -125,6 +126,15 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
         // Return the number of sections.
         return 1
     }
+    func CalculateSum()->(Double){
+        var sum: Double = 0
+        let mycart = Cart.sharedCart()
+        products = mycart.products
+        for obj in products{
+            sum += Double(obj.1) * obj.0.Price
+        }
+        return sum
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:
         NSIndexPath) -> UITableViewCell {
@@ -137,10 +147,9 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             cell.ProdTuple = products[indexPath.row]
             cell.delegate = self
             var value = products[indexPath.row].0.Price * Double(products[indexPath.row].1)
-            sum += value
-            cell.quantity.text = "\(Int(products[indexPath.row].0.Price))₽ x \(products[indexPath.row].1) = \(value)₽"
+            cell.quantity.text = "\(Int(products[indexPath.row].0.Price))р x \(products[indexPath.row].1) = \(value)₽"
             if(indexPath.row == products.count-1){//отобразить цену
-                MakeOrderButton.setTitle("Заказать на \(Int(sum)) + 50₽ доставка", forState: UIControlState.Normal)
+                MakeOrderButton.setTitle("Заказать на \(Int(sum)) + 50р доставка", forState: UIControlState.Normal)
             }
             return cell
     }
@@ -154,7 +163,7 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
        // var mycntrl = YMACpsController(clientId: "1F666358D089A71E1F37577B366C184AF390FECC898C0397F29562ACAE0D5F8C",patternId: "p2p",andPaymentParams:["amount":"1","to" : "410013085842859"])
         //self.naPushViewController(mycntrl, animated: true, completion: nil)
            // PaySuccess
-        var cntrl = YMACpsViewController(clientId: "1F666358D089A71E1F37577B366C184AF390FECC898C0397F29562ACAE0D5F8C",patternId: "p2p",andPaymentParams:["amount":"\(self.sum)","to" : "410013085842859"])
+        var cntrl = YMACpsViewController(clientId: "1F666358D089A71E1F37577B366C184AF390FECC898C0397F29562ACAE0D5F8C",patternId: "p2p",andPaymentParams:["amount":"\(self.sum+50)","to" : "410013085842859"])
             self.navigationController?.pushViewController(cntrl, animated: true)
             
             

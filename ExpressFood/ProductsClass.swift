@@ -17,6 +17,7 @@ class Product {
     var Id: String = ""
     var Imgreq : NSURLRequest?
     var Description: String = ""
+    var weight : Double = 0
     init(name : String, price: Double,image: UIImage, id: String){
         self.Name = name
         self.Price = price

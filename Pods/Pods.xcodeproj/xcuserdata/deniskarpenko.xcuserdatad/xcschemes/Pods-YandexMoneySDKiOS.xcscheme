@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "29D861808F0D5B2590E33CE8"
+               BlueprintIdentifier = "CE74626618F4A50CF06EDE43"
                BuildableName = "YandexMoneySDKiOS.framework"
                BlueprintName = "Pods-YandexMoneySDKiOS"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-SVProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-YandexMoneySDKObjc.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>29D861808F0D5B2590E33CE8</key>
+		<key>0BC3477476EBEF6B973AC08D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>31B555DF8613BF38945EDFAF</key>
+		<key>863AC2A4F59E6B2A43AF1C71</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A6FB14604FCA6EA73BB7B050</key>
+		<key>B94E94644B9572FC61FD0436</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE74626618F4A50CF06EDE43</key>
 		<dict>
 			<key>primary</key>
 			<true/>

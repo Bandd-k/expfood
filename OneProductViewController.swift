@@ -12,6 +12,7 @@ class OneProductViewController: UIViewController {
     var Prod: (Product,Int)?
     var quantity: Int = 0
     
+    @IBOutlet weak var ToCatButton: UIButton!
     @IBOutlet weak var DescriptionLabel: UITextView!
     @IBOutlet weak var PriceLabel: UILabel!
     @IBOutlet weak var NameLabel: UILabel!
@@ -24,8 +25,18 @@ class OneProductViewController: UIViewController {
         PriceLabel.text = "\(Prod!.0.Price)₽"
         NameLabel.text = Prod?.0.Name
         ProductImage.image = Prod?.0.Image
+        if(count(Prod!.0.Description) > 2){
         DescriptionLabel.text = Prod!.0.Description
+        }
+        else{
+            DescriptionLabel.text = "Описание отсутсвует :("
+        }
         DescriptionLabel.contentOffset = CGPointMake(0, -220)
+        if(quantity>0){
+            ToCatButton.setBackgroundImage(UIImage(named:"changeQuantity.png"), forState: UIControlState.Normal)
+        }else{
+            ToCatButton.setBackgroundImage(UIImage(named:"addProduct.png"), forState: UIControlState.Normal)
+        }
 
         // Do any additional setup after loading the view.
     }

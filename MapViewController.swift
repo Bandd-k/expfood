@@ -18,6 +18,9 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
     var error:NSError!
     var pointAnnotation:MKPointAnnotation!
     var pinAnnotationView:MKPinAnnotationView!
+    var radius: CLLocationDistance = 3000
+    var xcord = 55.6672199781833
+    var ycord = 37.2828599531204
     @IBOutlet weak var NameField: UITextField!
     var adrees = ""
 
@@ -30,10 +33,30 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        //get zone of delivery
+        var query = PFQuery(className:"Radius")
+        query.getObjectInBackgroundWithId("qiFXPpdUA1") {
+            (object: PFObject?, error: NSError?) -> Void in
+            if error == nil && object != nil {
+                if((object!["Value"] as? CLLocationDistance) != nil){
+                self.radius = object!["Value"] as! CLLocationDistance
+                }
+                if((object!["xCord"] as? Double) != nil){
+                self.xcord = object!["xCord"] as! Double
+                }
+                if((object!["yCord"] as? Double) != nil){
+                self.ycord = object!["yCord"] as! Double
+                }
+                
+            } else {
+                println(error)
+            }
+        }
         self.view.userInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
         tap.delegate = self
         self.view.addGestureRecognizer(tap)
+        addDoneButton()
         //self.performSegueWithIdentifier("Logged", sender: nil)//need to delete!
         // Create the search controller and make it perform the results updating.
         searchController = UISearchController(searchResultsController: nil)
@@ -169,7 +192,8 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
             self.pointAnnotation.title = searchBar.text
             self.pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse.boundingRegion.center.latitude, longitude:     localSearchResponse.boundingRegion.center.longitude)
             
-            let dormitoryCordinates = CLLocation(latitude: 55.6672199781833, longitude: 37.2828599531204)// center of our delivery
+            let dormitoryCordinates = CLLocation(latitude: self.xcord, longitude: self.ycord)// center of our delivery
+                //latutude = x , longitude = y
             let regionRadius: CLLocationDistance = 200
             var mypoint = self.pointAnnotation.coordinate
             var Home = CLLocation(latitude: mypoint.latitude, longitude: mypoint.longitude)
@@ -179,7 +203,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
             self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: nil)
             //self.mapView.centerCoordinate = self.pointAnnotation.coordinate
             self.mapView.addAnnotation(self.pinAnnotationView.annotation)
-            if(dormitoryCordinates.distanceFromLocation(Home)>2000){
+            if(dormitoryCordinates.distanceFromLocation(Home) > self.radius){
                 var alert = UIAlertView(title: nil, message: "К сожалению мы еще не работаем здесь ;(;(", delegate: self, cancelButtonTitle: "Ок")
                 alert.show()
             }
@@ -213,6 +237,44 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location,
             regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    func addDoneButton() {
+        let keyboardToolbar = UIToolbar()
+        keyboardToolbar.sizeToFit()
+        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
+            target: nil, action: nil)
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
+            target: view, action: Selector("endEditing:"))
+        keyboardToolbar.items = [flexBarButton, doneBarButton]
+        NumberField.inputAccessoryView = keyboardToolbar
+        flatField.inputAccessoryView = keyboardToolbar
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if(textField.isEqual(self.NumberField)){
+        self.animateField(textField, up: true)
+        }
+    }
+    
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        if(textField.isEqual(self.NumberField)){
+        self.animateField(textField, up: false)
+        }
+    }
+    
+    func animateField(textField : UITextField, up : Bool){// function which move screen when keyboard appears
+        let movementDistance = -150
+        let movementDuratation = 0.3
+        var movement = (up ? movementDistance : -movementDistance)
+        UIView.beginAnimations("animateField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuratation)
+        self.view.frame = CGRectOffset(self.view.frame, CGFloat(0), CGFloat( movement))
+        UIView.commitAnimations()
+        
+        
     }
 
 

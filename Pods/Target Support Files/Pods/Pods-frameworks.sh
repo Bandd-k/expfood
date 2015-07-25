@@ -48,10 +48,12 @@ code_sign() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework 'SVProgressHUD.framework'
   install_framework 'YandexMoneySDKObjc.framework'
   install_framework 'YandexMoneySDKiOS.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework 'SVProgressHUD.framework'
   install_framework 'YandexMoneySDKObjc.framework'
   install_framework 'YandexMoneySDKiOS.framework'
 fi

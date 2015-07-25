@@ -83,7 +83,7 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         cell.prod = products[indexPath.row]
         cell.Image.image = products[indexPath.row].Image
         cell.NameLabel.text = products[indexPath.row].Name
-        cell.PriceLabel.text = "\(Int(products[indexPath.row].Price))руб"
+        cell.PriceLabel.text = "\(Int(products[indexPath.row].Price))руб - \(Double(products[indexPath.row].weight))кг"
         //cell.PriceLabel.text = "бр"
         let mycart = Cart.sharedCart()
         var index = mycart.In(products[indexPath.row])
@@ -112,7 +112,7 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
     
     func loadData(){
         let url = NSURL(string: "http://expfood-poisk.rhcloud.com/api/v1/product/?category__category_name=\(tp)&format=json")
-        //let url =  NSURL(string: "http://expfood.ru/pro.php")
+        //let url =  NSURL(string: "http://um.mos.ru/api/houses.list.php")
         var request = NSURLRequest(URL: url!)
         var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
         if data != nil {

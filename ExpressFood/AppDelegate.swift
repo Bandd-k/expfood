@@ -45,21 +45,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let name = defaults.stringForKey("Name")
         {
             let password = defaults.stringForKey("Password")
+            self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            var exampleViewController: UINavigationController = mainStoryboard.instantiateViewControllerWithIdentifier("Second") as! UINavigationController
+            
+            self.window?.rootViewController = exampleViewController
+            
+            self.window?.makeKeyAndVisible()
             PFUser.logInWithUsernameInBackground(name, password: password!) {
                 (user: PFUser?, error: NSError?) -> Void in
                 if user != nil {
                     let mycart = Cart.sharedCart()
                     mycart.user = user
                     //change first screen
+                    // Do stuff after successful login.
+                } else {
+                    
                     self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
                     let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    var exampleViewController: UINavigationController = mainStoryboard.instantiateViewControllerWithIdentifier("Second") as! UINavigationController
+                    var exampleViewController: UINavigationController = mainStoryboard.instantiateViewControllerWithIdentifier("FirstScreen") as! UINavigationController
                     
                     self.window?.rootViewController = exampleViewController
                     
                     self.window?.makeKeyAndVisible()
-                    // Do stuff after successful login.
-                } else {
+                    var alert = UIAlertView(title: nil, message: "Вы не зашли в аккаунт!", delegate: self, cancelButtonTitle: "ок")
+                    alert.show()
                     // The login failed. Check error to see why.
                 }
             }
