@@ -14,10 +14,15 @@ class FirstScreenViewController: UIViewController,UITextFieldDelegate,UIGestureR
     @IBOutlet weak var PasswordField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.view.userInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
         tap.delegate = self
         self.view.addGestureRecognizer(tap)
+        var button = UIButton(frame: CGRectMake(15, 25, 30, 30))
+        button.setImage(UIImage(named: "cancelReg"), forState: UIControlState.Normal)
+        button.addTarget(self, action: "EnterCancel", forControlEvents: UIControlEvents.TouchDown)
+        self.view.addSubview(button)
         // вывод алерта при отсутсвии интернета
         //let mycart = Cart.sharedCart()
         //if(mycart.internet == false){
@@ -26,6 +31,12 @@ class FirstScreenViewController: UIViewController,UITextFieldDelegate,UIGestureR
         //}
 
         // Do any additional setup after loading the view.
+    }
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    func EnterCancel(){
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBOutlet weak var EnterPush: UIButton!
@@ -43,8 +54,8 @@ class FirstScreenViewController: UIViewController,UITextFieldDelegate,UIGestureR
                 mycart.user = user
                 defaults.setObject("\(self.NameField.text)", forKey: "Name")
                 defaults.setObject("\(self.PasswordField.text)", forKey: "Password")
-
-                self.performSegueWithIdentifier("First", sender: nil)
+                self.dismissViewControllerAnimated(true, completion: nil)
+                //self.performSegueWithIdentifier("First", sender: nil)
                 // Do stuff after successful login.
             } else {
                 let errorString = error!.userInfo?["error"] as? NSString

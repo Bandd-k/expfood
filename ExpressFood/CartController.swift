@@ -16,6 +16,7 @@ protocol CartCellDelegate{
 
 class CartController: UIViewController,UITableViewDataSource, UITableViewDelegate,CartCellDelegate,UIWebViewDelegate {
     var instanceIdQuery: NSDictionary?
+    weak var delegate:AddIntoCartDelegate?
     var instanceId: String?
     var pushed = 0
     @IBOutlet weak var MainTable: UITableView!
@@ -36,6 +37,9 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             //MakeOrderButton.titleLabel?.textAlignment = NSTextAlignment.Center
             MakeOrderButton.setTitle("Добавьте товаров в корзину !", forState: UIControlState.Normal)
         }
+        else if( sum < 300 ){
+            MakeOrderButton.setTitle("Минимальный заказ 300р", forState: UIControlState.Normal)
+        }
         //SendOrder()
         MakeOrderButton.setBackgroundImage(UIImage(named: "cartBackground.png"), forState: UIControlState.Normal)
         MakeOrderButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -44,6 +48,7 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
     }
     override func viewWillAppear(animated: Bool) {
         sum = CalculateSum()
+        self.pushed = 0
         if(self.pushed == 1){
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.pushed = 0
@@ -70,6 +75,7 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
     @IBOutlet weak var MakeOrderButton: UIButton!
     //method calls when Pushed delete in cell
     func didDeleteItem() {
+        delegate?.addProduct()
         let mycart = Cart.sharedCart()
         products = mycart.products
         sum = CalculateSum()
@@ -77,7 +83,13 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
         if(products.count == 0 ){
         MakeOrderButton.setTitle("Добавьте товаров в корзину !", forState: UIControlState.Normal)
         }
-        
+        else if( sum < 300 ){
+            MakeOrderButton.setTitle("Минимальный заказ 300р", forState: UIControlState.Normal)
+        }
+    }
+    
+    @IBAction func cancel(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     func SendOrder(){
         var order = PFObject(className:"Orders")
@@ -143,13 +155,18 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             //let cell = tableView.cellForRowAtIndexPath(indexPath) as! CartCell
             // Configure the cell...
             cell.Name.text = products[indexPath.row].0.Name
-            cell.Img!.image = products[indexPath.row].0.Image
+            cell.Img!.kf_setImageWithURL(products[indexPath.row].0.imageUrl, placeholderImage: UIImage(named: "placeholder"))
             cell.ProdTuple = products[indexPath.row]
             cell.delegate = self
             var value = products[indexPath.row].0.Price * Double(products[indexPath.row].1)
             cell.quantity.text = "\(Int(products[indexPath.row].0.Price))р x \(products[indexPath.row].1) = \(value)₽"
             if(indexPath.row == products.count-1){//отобразить цену
-                MakeOrderButton.setTitle("Заказать на \(Int(sum)) + 50р доставка", forState: UIControlState.Normal)
+                if(CalculateSum() > 300){
+                MakeOrderButton.setTitle("Заказать на \(Int(sum))р", forState: UIControlState.Normal)
+                }
+                else{
+                        MakeOrderButton.setTitle("Минимальный заказ 300р", forState: UIControlState.Normal)
+                }
             }
             return cell
     }
@@ -158,13 +175,25 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
     @IBOutlet weak var Butt: UIButton!
     @IBAction func Order(sender: AnyObject) {
         self.pushed = 1
-        if(products.count != 0) {
+        if(products.count != 0 && CalculateSum() > 300) {
         //Яндекс Деньги !!
        // var mycntrl = YMACpsController(clientId: "1F666358D089A71E1F37577B366C184AF390FECC898C0397F29562ACAE0D5F8C",patternId: "p2p",andPaymentParams:["amount":"1","to" : "410013085842859"])
         //self.naPushViewController(mycntrl, animated: true, completion: nil)
            // PaySuccess
-        var cntrl = YMACpsViewController(clientId: "1F666358D089A71E1F37577B366C184AF390FECC898C0397F29562ACAE0D5F8C",patternId: "p2p",andPaymentParams:["amount":"\(self.sum+50)","to" : "410013085842859"])
-            self.navigationController?.pushViewController(cntrl, animated: true)
+            
+            
+//        var cntrl = YMACpsViewController(clientId: "1F666358D089A71E1F37577B366C184AF390FECC898C0397F29562ACAE0D5F8C",patternId: "p2p",andPaymentParams:["amount":"\(self.sum+50)","to" : "410013085842859"])
+//            self.navigationController?.pushViewController(cntrl, animated: true) // working code!
+            let defaults = NSUserDefaults.standardUserDefaults()
+                    if PFUser.currentUser() != nil
+                    {
+                        let password = defaults.stringForKey("Password")
+            performSegueWithIdentifier("toPrePaid", sender: nil)
+            }
+                    else{
+                        performSegueWithIdentifier("toReg", sender: nil)
+                        
+            }
             
             
             //второй способ
@@ -222,8 +251,9 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             
         }
         else{
-            var controlers = self.navigationController?.viewControllers
-            self.navigationController?.popToViewController(controlers![1] as! UIViewController, animated: true)
+            //var controlers = self.navigationController?.viewControllers
+            //self.navigationController?.popToViewController(controlers![1] as! UIViewController, animated: true) - old
+            self.dismissViewControllerAnimated(true, completion: nil)
             
         }
         
@@ -253,14 +283,37 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
 
         
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toPrePaid" {
+            let dest = segue.destinationViewController as! prePaidController
+            var free = false
+            if let currentUser = PFUser.currentUser() {
+                free = currentUser["free"] as! Bool
+                
+            }
+            if(!free){
+            dest.form.formRowWithTag("price")!.value = self.sum.description
+            //dest.form.formRowWithTag("delivery")!.value = "50"
+            dest.form.formRowWithTag("Sale")!.value = (self.sum * -0.05).description
+            dest.form.formRowWithTag("sum")!.value = (self.sum * 0.95 + 100).description
+            dest.sum = self.sum + 100
+            dest.secondSum = self.sum * 0.95 + 100
+            }
+            else {
+                dest.form.formRowWithTag("price")!.value = self.sum.description
+                //dest.form.formRowWithTag("delivery")!.value = "50"
+                dest.form.formRowWithTag("Sale")!.value = (self.sum * -0.05).description
+                dest.form.formRowWithTag("sum")!.value = (self.sum * 0.95).description
+                dest.sum = self.sum
+                dest.secondSum = self.sum * 0.95
+                
+            }
+        }
     }
-    */
+    
 
 }

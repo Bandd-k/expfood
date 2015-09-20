@@ -11,18 +11,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="first" translatesAutoresizingMaskIntoConstraints="NO" id="oim-i7-VaG">
-                    <rect key="frame" x="0.0" y="188" width="375" height="116"/>
+                    <rect key="frame" x="60" y="198" width="255" height="91"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="116" id="jVQ-Zs-h5p"/>
+                        <constraint firstAttribute="width" constant="255" id="NVS-cr-YFa"/>
+                        <constraint firstAttribute="height" constant="91" id="xTp-6t-hGp"/>
                     </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.35294117647058826" green="0.77254901960784317" blue="0.32549019607843138" alpha="1" colorSpace="calibratedRGB"/>
             <color key="tintColor" red="0.52021108039190045" green="1" blue="0.67338701833777059" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="oim-i7-VaG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="188" id="MLn-LU-HQb"/>
-                <constraint firstAttribute="trailing" secondItem="oim-i7-VaG" secondAttribute="trailing" id="YZQ-qK-pD9"/>
-                <constraint firstItem="oim-i7-VaG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qC0-v7-SbN"/>
+                <constraint firstAttribute="centerX" secondItem="oim-i7-VaG" secondAttribute="centerX" id="W57-99-s3p"/>
+                <constraint firstItem="oim-i7-VaG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="198" id="zAu-mD-P6M"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

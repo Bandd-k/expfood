@@ -1,15 +1,21 @@
 PODS:
+  - Kingfisher (1.4.2)
   - SVProgressHUD (1.1.3)
+  - XLForm (3.0.1)
   - YandexMoneySDKiOS (1.0.4):
     - YandexMoneySDKObjc (~> 1.0)
   - YandexMoneySDKObjc (1.1.14)
 
 DEPENDENCIES:
+  - Kingfisher (~> 1.4)
   - SVProgressHUD
+  - XLForm (~> 3.0.0)
   - YandexMoneySDKiOS
 
 SPEC CHECKSUMS:
+  Kingfisher: 4446782a827abbe2e6048a1fa741924a10e6ad7c
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  XLForm: 1a20da41c009e4f99e802e886a8eef5f2b086644
   YandexMoneySDKiOS: 82d471a8b8c61dd56b631fb1b94e4cbacaaaa576
   YandexMoneySDKObjc: d3b6796cd4f7fed04f2a7f269035810c61d38dec
 

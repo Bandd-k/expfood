@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		50034EB71B05E9F700B2EA6A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50034EB51B05E9F700B2EA6A /* Bolts.framework */; };
-		50034EB81B05E9F700B2EA6A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50034EB61B05E9F700B2EA6A /* Parse.framework */; };
 		50034EBA1B05EA2300B2EA6A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50034EB91B05EA2300B2EA6A /* AudioToolbox.framework */; };
 		50034EBC1B05EA2A00B2EA6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50034EBB1B05EA2A00B2EA6A /* CFNetwork.framework */; };
 		50034EBE1B05EA3C00B2EA6A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50034EBD1B05EA3C00B2EA6A /* CoreGraphics.framework */; };
@@ -22,12 +21,20 @@
 		50034ECE1B05EA9000B2EA6A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50034ECD1B05EA9000B2EA6A /* libsqlite3.dylib */; };
 		50034ED01B05F35900B2EA6A /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50034ECF1B05F35900B2EA6A /* Accounts.framework */; };
 		50034ED21B05F36100B2EA6A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50034ED11B05F36100B2EA6A /* Social.framework */; };
+		5012F9931B6958200097A29E /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5012F9921B6958200097A29E /* UIBarButtonItem+Badge.m */; };
+		5014CCC41B68A88B007EBC18 /* ProductsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014CCC31B68A88B007EBC18 /* ProductsListController.swift */; };
+		5014CCC61B68E155007EBC18 /* UIColor +MyColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014CCC51B68E155007EBC18 /* UIColor +MyColor.swift */; };
+		503DB1F11B6CAD9F00B16D66 /* prePaidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DB1F01B6CAD9F00B16D66 /* prePaidController.swift */; };
+		50474F7E1B6F5E5C00D11579 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50474F7D1B6F5E5C00D11579 /* RegistrationController.swift */; };
 		50802E821AFBE1C700B594D6 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50802E811AFBE1C700B594D6 /* SwiftyJSON.swift */; };
 		50802E841AFBECC600B594D6 /* ProdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50802E831AFBECC600B594D6 /* ProdCell.swift */; };
 		50802E861AFD3CAE00B594D6 /* OneProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50802E851AFD3CAE00B594D6 /* OneProductViewController.swift */; };
 		50802E881B00CB8400B594D6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50802E871B00CB8400B594D6 /* MapViewController.swift */; };
 		50802E8A1B00FC7D00B594D6 /* FirstScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50802E891B00FC7D00B594D6 /* FirstScreenViewController.swift */; };
+		50981D1F1B7A6F2600A3CEC1 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50981D1E1B7A6F2600A3CEC1 /* Parse.framework */; };
 		50BBDA021B0BCA960043AE9D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BBDA011B0BCA960043AE9D /* Reachability.swift */; };
+		50D3DC371BA60AC40092BA75 /* GHWalkThroughPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D3DC341BA60AC40092BA75 /* GHWalkThroughPageCell.m */; };
+		50D3DC381BA60AC40092BA75 /* GHWalkThroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D3DC361BA60AC40092BA75 /* GHWalkThroughView.m */; };
 		50E8432D1AD009910094F47E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8432C1AD009910094F47E /* AppDelegate.swift */; };
 		50E843321AD009910094F47E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E843301AD009910094F47E /* Main.storyboard */; };
 		50E843341AD009910094F47E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50E843331AD009910094F47E /* Images.xcassets */; };
@@ -41,7 +48,6 @@
 		50E843651AD0658E0094F47E /* CartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E843641AD0658E0094F47E /* CartController.swift */; };
 		50E843671AD0670E0094F47E /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E843661AD0670E0094F47E /* CartCell.swift */; };
 		50E8436F1AD07A820094F47E /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8436E1AD07A820094F47E /* Cart.swift */; };
-		50E843AB1AD0D4CC0094F47E /* PayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E843AA1AD0D4CC0094F47E /* PayController.swift */; };
 		5E0A4EA959B864C5522A3811 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EBB4AAD4962403350B0C5DB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -58,7 +64,6 @@
 /* Begin PBXFileReference section */
 		38CD6DFA45CFFFFAF24464BF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		50034EB51B05E9F700B2EA6A /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		50034EB61B05E9F700B2EA6A /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		50034EB91B05EA2300B2EA6A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		50034EBB1B05EA2A00B2EA6A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		50034EBD1B05EA3C00B2EA6A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -72,12 +77,23 @@
 		50034ECD1B05EA9000B2EA6A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		50034ECF1B05F35900B2EA6A /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		50034ED11B05F36100B2EA6A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		5012F9911B6958200097A29E /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
+		5012F9921B6958200097A29E /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
+		5014CCC31B68A88B007EBC18 /* ProductsListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductsListController.swift; sourceTree = "<group>"; };
+		5014CCC51B68E155007EBC18 /* UIColor +MyColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor +MyColor.swift"; sourceTree = "<group>"; };
+		503DB1F01B6CAD9F00B16D66 /* prePaidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = prePaidController.swift; sourceTree = "<group>"; };
+		50474F7D1B6F5E5C00D11579 /* RegistrationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		50802E811AFBE1C700B594D6 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = ../SwiftyJSON.swift; sourceTree = "<group>"; };
 		50802E831AFBECC600B594D6 /* ProdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProdCell.swift; sourceTree = "<group>"; };
 		50802E851AFD3CAE00B594D6 /* OneProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneProductViewController.swift; sourceTree = "<group>"; };
 		50802E871B00CB8400B594D6 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		50802E891B00FC7D00B594D6 /* FirstScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstScreenViewController.swift; sourceTree = "<group>"; };
+		50981D1E1B7A6F2600A3CEC1 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		50BBDA011B0BCA960043AE9D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		50D3DC331BA60AC40092BA75 /* GHWalkThroughPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHWalkThroughPageCell.h; path = walkThrough/GHWalkThroughPageCell.h; sourceTree = SOURCE_ROOT; };
+		50D3DC341BA60AC40092BA75 /* GHWalkThroughPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHWalkThroughPageCell.m; path = walkThrough/GHWalkThroughPageCell.m; sourceTree = SOURCE_ROOT; };
+		50D3DC351BA60AC40092BA75 /* GHWalkThroughView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHWalkThroughView.h; path = walkThrough/GHWalkThroughView.h; sourceTree = SOURCE_ROOT; };
+		50D3DC361BA60AC40092BA75 /* GHWalkThroughView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHWalkThroughView.m; path = walkThrough/GHWalkThroughView.m; sourceTree = SOURCE_ROOT; };
 		50E843271AD009910094F47E /* ExpressFood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExpressFood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50E8432B1AD009910094F47E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50E8432C1AD009910094F47E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,7 +111,6 @@
 		50E843641AD0658E0094F47E /* CartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartController.swift; path = ExpressFood/CartController.swift; sourceTree = "<group>"; };
 		50E843661AD0670E0094F47E /* CartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartCell.swift; path = ExpressFood/CartCell.swift; sourceTree = "<group>"; };
 		50E8436E1AD07A820094F47E /* Cart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cart.swift; path = ExpressFood/Cart.swift; sourceTree = "<group>"; };
-		50E843AA1AD0D4CC0094F47E /* PayController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PayController.swift; path = ExpressFood/PayController.swift; sourceTree = "<group>"; };
 		50E843B81AD10E0F0094F47E /* ExpressFood-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ExpressFood-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		5EA3DDD5470988623732D7B9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		9EBB4AAD4962403350B0C5DB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +127,7 @@
 				50034ECC1B05EA7F00B2EA6A /* libz.dylib in Frameworks */,
 				50034ECA1B05EA7100B2EA6A /* SystemConfiguration.framework in Frameworks */,
 				50034EC81B05EA6700B2EA6A /* StoreKit.framework in Frameworks */,
+				50981D1F1B7A6F2600A3CEC1 /* Parse.framework in Frameworks */,
 				50034EC61B05EA6000B2EA6A /* Security.framework in Frameworks */,
 				50034EC41B05EA5800B2EA6A /* QuartzCore.framework in Frameworks */,
 				50034EC21B05EA4F00B2EA6A /* MobileCoreServices.framework in Frameworks */,
@@ -120,7 +136,6 @@
 				50034EBC1B05EA2A00B2EA6A /* CFNetwork.framework in Frameworks */,
 				50034EBA1B05EA2300B2EA6A /* AudioToolbox.framework in Frameworks */,
 				5E0A4EA959B864C5522A3811 /* Pods.framework in Frameworks */,
-				50034EB81B05E9F700B2EA6A /* Parse.framework in Frameworks */,
 				50034EB71B05E9F700B2EA6A /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +153,7 @@
 		27E664C4244B2496798AFB30 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50981D1E1B7A6F2600A3CEC1 /* Parse.framework */,
 				50034ED11B05F36100B2EA6A /* Social.framework */,
 				50034ECF1B05F35900B2EA6A /* Accounts.framework */,
 				50034ECD1B05EA9000B2EA6A /* libsqlite3.dylib */,
@@ -152,7 +168,6 @@
 				50034EBB1B05EA2A00B2EA6A /* CFNetwork.framework */,
 				50034EB91B05EA2300B2EA6A /* AudioToolbox.framework */,
 				50034EB51B05E9F700B2EA6A /* Bolts.framework */,
-				50034EB61B05E9F700B2EA6A /* Parse.framework */,
 				9EBB4AAD4962403350B0C5DB /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -164,10 +179,12 @@
 				50802E891B00FC7D00B594D6 /* FirstScreenViewController.swift */,
 				50E843641AD0658E0094F47E /* CartController.swift */,
 				50E843561AD03C870094F47E /* ProductsView.swift */,
+				5014CCC31B68A88B007EBC18 /* ProductsListController.swift */,
 				50E8434C1AD01F960094F47E /* TypeController.swift */,
-				50E843AA1AD0D4CC0094F47E /* PayController.swift */,
 				50802E871B00CB8400B594D6 /* MapViewController.swift */,
 				50802E851AFD3CAE00B594D6 /* OneProductViewController.swift */,
+				503DB1F01B6CAD9F00B16D66 /* prePaidController.swift */,
+				50474F7D1B6F5E5C00D11579 /* RegistrationController.swift */,
 			);
 			name = controllers;
 			path = ..;
@@ -177,8 +194,8 @@
 			isa = PBXGroup;
 			children = (
 				50802E831AFBECC600B594D6 /* ProdCell.swift */,
-				50E843661AD0670E0094F47E /* CartCell.swift */,
 				50E8434E1AD0203F0094F47E /* CellForType.swift */,
+				50E843661AD0670E0094F47E /* CartCell.swift */,
 			);
 			name = cells;
 			path = ..;
@@ -194,6 +211,17 @@
 			);
 			name = models;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		50D3DC321BA60AB10092BA75 /* walkthroug */ = {
+			isa = PBXGroup;
+			children = (
+				50D3DC331BA60AC40092BA75 /* GHWalkThroughPageCell.h */,
+				50D3DC341BA60AC40092BA75 /* GHWalkThroughPageCell.m */,
+				50D3DC351BA60AC40092BA75 /* GHWalkThroughView.h */,
+				50D3DC361BA60AC40092BA75 /* GHWalkThroughView.m */,
+			);
+			name = walkthroug;
 			sourceTree = "<group>";
 		};
 		50E8431E1AD009910094F47E = {
@@ -219,6 +247,7 @@
 		50E843291AD009910094F47E /* ExpressFood */ = {
 			isa = PBXGroup;
 			children = (
+				50D3DC321BA60AB10092BA75 /* walkthroug */,
 				50E8432C1AD009910094F47E /* AppDelegate.swift */,
 				50802E811AFBE1C700B594D6 /* SwiftyJSON.swift */,
 				50E843B81AD10E0F0094F47E /* ExpressFood-Bridging-Header.h */,
@@ -229,6 +258,9 @@
 				50E843331AD009910094F47E /* Images.xcassets */,
 				50E843351AD009910094F47E /* LaunchScreen.xib */,
 				50E8432A1AD009910094F47E /* Supporting Files */,
+				5014CCC51B68E155007EBC18 /* UIColor +MyColor.swift */,
+				5012F9911B6958200097A29E /* UIBarButtonItem+Badge.h */,
+				5012F9921B6958200097A29E /* UIBarButtonItem+Badge.m */,
 			);
 			path = ExpressFood;
 			sourceTree = "<group>";
@@ -426,13 +458,19 @@
 				50E8436F1AD07A820094F47E /* Cart.swift in Sources */,
 				50E843591AD03E0C0094F47E /* ProductsClass.swift in Sources */,
 				50802E841AFBECC600B594D6 /* ProdCell.swift in Sources */,
+				5014CCC61B68E155007EBC18 /* UIColor +MyColor.swift in Sources */,
+				50D3DC371BA60AC40092BA75 /* GHWalkThroughPageCell.m in Sources */,
+				50D3DC381BA60AC40092BA75 /* GHWalkThroughView.m in Sources */,
 				50802E861AFD3CAE00B594D6 /* OneProductViewController.swift in Sources */,
 				50E843651AD0658E0094F47E /* CartController.swift in Sources */,
 				50E8432D1AD009910094F47E /* AppDelegate.swift in Sources */,
-				50E843AB1AD0D4CC0094F47E /* PayController.swift in Sources */,
+				503DB1F11B6CAD9F00B16D66 /* prePaidController.swift in Sources */,
 				50E843671AD0670E0094F47E /* CartCell.swift in Sources */,
 				50E843511AD025090094F47E /* TypeClass.swift in Sources */,
 				50BBDA021B0BCA960043AE9D /* Reachability.swift in Sources */,
+				5012F9931B6958200097A29E /* UIBarButtonItem+Badge.m in Sources */,
+				5014CCC41B68A88B007EBC18 /* ProductsListController.swift in Sources */,
+				50474F7E1B6F5E5C00D11579 /* RegistrationController.swift in Sources */,
 				50802E881B00CB8400B594D6 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

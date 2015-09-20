@@ -19,78 +19,81 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         //color settings
-        window?.backgroundColor=UIColor(red: 102.0/255.0, green: 204.0/255.0, blue:
-            102.0/255.0, alpha: 1)
-        UINavigationBar.appearance().barTintColor = UIColor(red: 102.0/255.0, green: 204.0/255.0, blue:
-            102.0/255.0, alpha: 1)
+        window?.backgroundColor = UIColor.appColor()
+        UINavigationBar.appearance().barTintColor = UIColor.appColor()
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]//!!
             UIApplication.sharedApplication().statusBarStyle = .LightContent
-        UISearchBar.appearance().barTintColor = UIColor(red: 102.0/255.0, green: 204.0/255.0, blue:
-            102.0/255.0, alpha: 1)
-        UISearchBar.appearance().tintColor = UIColor.whiteColor()
+        UISearchBar.appearance().barTintColor = UIColor.appColor()
+        UISearchBar.appearance().tintColor = UIColor.appColor()// previous application had white
+
         
         // Initialize Parse.
         Parse.enableLocalDatastore()
         
         Parse.setApplicationId("mmcrSN69TR6IR6e6uo2pzlhpR2amZNkHl4b0GVh1",
             clientKey: "Rmje4FSVrkEMYIdnLDdZmFpZjqlYueJzr6B4Afm7")
-        
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
         
         //change root controller
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let name = defaults.stringForKey("Name")
-        {
-            let password = defaults.stringForKey("Password")
-            self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            var exampleViewController: UINavigationController = mainStoryboard.instantiateViewControllerWithIdentifier("Second") as! UINavigationController
-            
-            self.window?.rootViewController = exampleViewController
-            
-            self.window?.makeKeyAndVisible()
-            PFUser.logInWithUsernameInBackground(name, password: password!) {
-                (user: PFUser?, error: NSError?) -> Void in
-                if user != nil {
-                    let mycart = Cart.sharedCart()
-                    mycart.user = user
-                    //change first screen
-                    // Do stuff after successful login.
-                } else {
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        if let name = defaults.stringForKey("Name")
+//        {
+//            let password = defaults.stringForKey("Password")
+//            self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            var exampleViewController: UINavigationController = mainStoryboard.instantiateViewControllerWithIdentifier("Second") as! UINavigationController
+//            
+//            self.window?.rootViewController = exampleViewController
+//            
+//            self.window?.makeKeyAndVisible()
+//            PFUser.logInWithUsernameInBackground(name, password: password!) {
+//                (user: PFUser?, error: NSError?) -> Void in
+//                if user != nil {
+//                    let mycart = Cart.sharedCart()
+//                    mycart.user = user
+//                    //change first screen
+//                    // Do stuff after successful login.
+//                } else {
+        
                     
-                    self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-                    let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    var exampleViewController: UINavigationController = mainStoryboard.instantiateViewControllerWithIdentifier("FirstScreen") as! UINavigationController
+//                    self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//                    let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                    var exampleViewController: UINavigationController = mainStoryboard.instantiateViewControllerWithIdentifier("FirstScreen") as! UINavigationController
+//                    
+//                    self.window?.rootViewController = exampleViewController
+//                    
+//                    self.window?.makeKeyAndVisible()
+//                    var alert = UIAlertView(title: nil, message: "Вы не зашли в аккаунт!", delegate: self, cancelButtonTitle: "ок")
+//                    alert.show()
                     
-                    self.window?.rootViewController = exampleViewController
                     
-                    self.window?.makeKeyAndVisible()
-                    var alert = UIAlertView(title: nil, message: "Вы не зашли в аккаунт!", delegate: self, cancelButtonTitle: "ок")
-                    alert.show()
+                    
+                    
                     // The login failed. Check error to see why.
-                }
-            }
+//                }
+//            }
         
             
 
             
-        }
+//        }
         if Reachability.isConnectedToNetwork() == true {
             println("Internet connection OK")
         } else {
             let mycart = Cart.sharedCart()
             mycart.internet = false
             println("Internet connection FAILED")
-            var alert = UIAlertView(title: "Слабое интернет соединение:(", message: "К сожалению работа может быть не мгновенной", delegate: nil, cancelButtonTitle: "OK")
+            var alert = UIAlertView(title: "Отсутсвует соединение с интернетом", message: "Пожалуйста установите соединение с интернетом", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         }
 
         // Override point for customization after application launch.
         return true
     }
+    
     
     
 
@@ -115,6 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+
 
 
 }

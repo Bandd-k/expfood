@@ -6,3 +6,5 @@ use_frameworks!
 
 pod 'YandexMoneySDKiOS'
 pod 'SVProgressHUD'
+pod 'Kingfisher', '~> 1.4'
+pod 'XLForm', '~> 3.0.0'

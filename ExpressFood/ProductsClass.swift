@@ -13,16 +13,17 @@ class Product {
     var Name: String = ""
     var Price: Double = 0
     var objectId: String = ""
-    var Image: UIImage
-    var Id: String = ""
+    var imageUrl: NSURL
+    //var Image: UIImage
+    //var Id: String = ""
     var Imgreq : NSURLRequest?
     var Description: String = ""
     var weight : Double = 0
-    init(name : String, price: Double,image: UIImage, id: String){
+    init(name : String, price: Double,ImageUrl: NSURL, id: String){
         self.Name = name
         self.Price = price
-        self.Image = image
-        self.Id = id
+        self.imageUrl = ImageUrl
+        self.objectId = id
     }
     
 }

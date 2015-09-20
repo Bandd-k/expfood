@@ -27,5 +27,10 @@
 
 
 #import "SVProgressHUD.h"
+#import "UIBarButtonItem+Badge.h"
+#import "XLForm/XLForm.h"
+
+
+#import "GHWalkThroughView.h"
 
 #endif

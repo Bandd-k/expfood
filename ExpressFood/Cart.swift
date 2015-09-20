@@ -11,6 +11,7 @@ import Parse
 
 class Cart: NSObject {// singleton
     var user : PFUser?
+    var ordered: Bool = false
     var internet : Bool = true
     var products: [(Product,Int)] = []
     class func sharedCart() -> Cart {
@@ -25,18 +26,28 @@ class Cart: NSObject {// singleton
     }
     func deleteFromCart(Prod: Product){
         for (index,elem) in enumerate(products){
-            if(elem.0.Id == Prod.Id){
+            if(elem.0.objectId == Prod.objectId){
                 products.removeAtIndex(index)
             }
         }
     }
     func In(Prod: Product) ->Int{
         for (index,elem) in enumerate(products){
-            if(elem.0.Id == Prod.Id){
+            if(elem.0.objectId == Prod.objectId){
                 return index
             }
         }
         return -1
+    }
+    func cartQuantity() -> Int {
+        var sum = 0
+        for elem in products {
+            sum += elem.1
+        }
+        return sum
+    }
+    func deleteAll(){
+        products = []
     }
     
 }

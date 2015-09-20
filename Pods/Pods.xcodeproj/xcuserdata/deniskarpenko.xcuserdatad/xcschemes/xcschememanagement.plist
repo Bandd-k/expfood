@@ -4,7 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-Kingfisher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SVProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-XLForm.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0BC3477476EBEF6B973AC08D</key>
+		<key>02D11F3EB0F2D5C5D20125B6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>863AC2A4F59E6B2A43AF1C71</key>
+		<key>06F9A91B12BB98270C8CB84E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B94E94644B9572FC61FD0436</key>
+		<key>19740D9268045447CE1CC73B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CE74626618F4A50CF06EDE43</key>
+		<key>ADC0AADFFDD1CE402A011FBC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E4014ACE2F4AE10AB8BA2516</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F3037C17FCF7259C5BA16CA6</key>
 		<dict>
 			<key>primary</key>
 			<true/>

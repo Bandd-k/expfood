@@ -8,26 +8,33 @@
 
 import UIKit
 import Parse
+import Kingfisher
 
 let reuseIdentifier = "Cell"
 
 
 
-class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayout {
-
+class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayout,UITextFieldDelegate,UISearchBarDelegate,AddIntoCartDelegate {
+    lazy var searchBar:UISearchBar = UISearchBar(frame: CGRectMake(0, 0, 200, 30))
     var products:[Product] = []
-    var tuples:[(Product,Int)] = []
+    var filteredProducts:[Product] = []
+    var searchActive : Bool = false
     var tp:String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = tp
+        //self.navigationItem.title = tp
         //ParseLoadData()
         println("Hello")
         //set cell size
         var size = (self.view.bounds.width-8) / 3
         var test: UICollectionViewFlowLayout = self.collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         test.itemSize =  CGSizeMake(size,size+100)
-
+        // search controller
+        navigationItem.rightBarButtonItem = BarButton()
+        var rightSearchBarButtonItem:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: "searchTapped")
+        // 3
+        //self.navigationItem.setRightBarButtonItems([self.navigationItem.rightBarButtonItem!,rightSearchBarButtonItem], animated: true)
+        searchTapped()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -36,11 +43,42 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
 
         // Do any additional setup after loading the view.
     }
-    override func viewDidAppear(animated: Bool) {
-        //self.hint()
-        self.tuples = []
-        //self.loadData()
-        self.collectionView?.reloadData()
+    override func viewWillAppear(animated: Bool) {
+        if Cart.sharedCart().ordered {
+            self.collectionView?.reloadData()
+            Cart.sharedCart().ordered = false
+            navigationItem.rightBarButtonItem = BarButton()
+        }
+        //navigationItem.rightBarButtonItem = BarButton()
+    }
+    
+    func BarButton()-> UIBarButtonItem{
+        
+        var but = UIButton(frame: CGRectMake(0, 0, 40, 40))
+        but.addTarget(self, action: "performToCart", forControlEvents: UIControlEvents.TouchDown)
+        var img = UIImage(named: "shopping-cart")
+        but.setImage(img, forState: UIControlState.Normal)
+        var navLeft = UIBarButtonItem(customView: but)
+        navLeft.badgeValue = Cart.sharedCart().cartQuantity().description
+        navLeft.badgeBGColor = UIColor.orangeColor()
+        navLeft.badgePadding = 3
+        navLeft.badgeOriginY = 5
+        return navLeft
+    }
+    func performToCart(){
+        self.performSegueWithIdentifier("toCart", sender: nil)
+    }
+    func searchTapped(){
+        
+        searchBar.placeholder = "Поиск"
+        var leftNavBarButton = UIBarButtonItem(customView:searchBar)
+        self.navigationItem.titleView = searchBar
+        var textFieldInsideSearchBar = searchBar.valueForKey("searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.appColor()
+        definesPresentationContext = true
+        searchBar.delegate = self
+        
+        
     }
     func hint()->(){
         self.collectionView?.reloadSections(NSIndexSet(index: 0))
@@ -72,18 +110,48 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return products.count
+        if searchActive {
+          return filteredProducts.count
+        }
+        else{
+          return products.count
+        }
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
             //1
+        if searchActive {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ProdCell
             //let cell = collectionView.cellForItemAtIndexPath(indexPath) as! ProdCell
             //2 configurate
+        cell.prod = filteredProducts[indexPath.row]
+        cell.Image.kf_setImageWithURL(filteredProducts[indexPath.row].imageUrl, placeholderImage: UIImage(named: "placeholder"))
+        cell.NameLabel.text = filteredProducts[indexPath.row].Name
+        cell.PriceLabel.text = "\(Int(filteredProducts[indexPath.row].Price))руб - \(Double(filteredProducts[indexPath.row].weight))г"
+        //cell.PriceLabel.text = "бр"
+        let mycart = Cart.sharedCart()
+        var index = mycart.In(filteredProducts[indexPath.row])
+        if(index > -1){
+            cell.QuantityImage.image = UIImage(named: "orange.png")
+            cell.quantityLabel.text = "\(mycart.products[index].1)"
+            cell.tuple = (filteredProducts[indexPath.row],mycart.products[index].1)
+        }
+        else{
+            cell.QuantityImage.image = nil
+            cell.quantityLabel.text = ""
+            cell.tuple = (filteredProducts[indexPath.row],0)
+        }
+        //cell.Description.textColor = UIColor(red: 102.0/255.0, green: 204.0/255.0, blue:
+         //   102.0/255.0, alpha: 1)
+            return cell
+        } else {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ProdCell
+        //let cell = collectionView.cellForItemAtIndexPath(indexPath) as! ProdCell
+        //2 configurate
         cell.prod = products[indexPath.row]
-        cell.Image.image = products[indexPath.row].Image
+        cell.Image.kf_setImageWithURL(products[indexPath.row].imageUrl, placeholderImage: UIImage(named: "placeholder"))
         cell.NameLabel.text = products[indexPath.row].Name
-        cell.PriceLabel.text = "\(Int(products[indexPath.row].Price))руб - \(Double(products[indexPath.row].weight))кг"
+        cell.PriceLabel.text = "\(Int(products[indexPath.row].Price))руб - \(Double(products[indexPath.row].weight))г"
         //cell.PriceLabel.text = "бр"
         let mycart = Cart.sharedCart()
         var index = mycart.In(products[indexPath.row])
@@ -98,8 +166,9 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
             cell.tuple = (products[indexPath.row],0)
         }
         //cell.Description.textColor = UIColor(red: 102.0/255.0, green: 204.0/255.0, blue:
-         //   102.0/255.0, alpha: 1)
-            return cell
+        //   102.0/255.0, alpha: 1)
+        return cell
+        }
         }
     
     private let sectionInsets = UIEdgeInsets(top: 2.0, left: 2.0, bottom: 2.0, right: 2.0)
@@ -109,6 +178,10 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         insetForSectionAtIndex section: Int) -> UIEdgeInsets {
             return sectionInsets
     }
+    
+    /*
+    Depricated
+    
     
     func loadData(){
         let url = NSURL(string: "http://expfood-poisk.rhcloud.com/api/v1/product/?category__category_name=\(tp)&format=json")
@@ -165,10 +238,10 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
             }
         }
         
-
-        
-        
     }
+     */
+        
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 1
     }
@@ -177,15 +250,79 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         return 1
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        searchBar.resignFirstResponder()
+        searchBar.text = ""
+        searchActive = false
         if segue.identifier == "fromCell"{ // adjusting segue
              if let indexPath = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell){
                 let destinationController = segue.destinationViewController as! OneProductViewController
                 destinationController.Prod = (sender as! ProdCell).tuple
+                destinationController.delegate = self
                 
             }
             
+        }else if segue.identifier == "toCart" {
+            let destinationController = (segue.destinationViewController as! UINavigationController).viewControllers[0] as! CartController
+            destinationController.delegate = self
         }
     }
+    
+    func addProduct(){
+        navigationItem.rightBarButtonItem = BarButton()
+        self.collectionView?.reloadData()
+    }
+    
+    // SearchDelegate
+    func filterContentForSearchText(searchText: String) {
+        filteredProducts = products.filter({ ( product: Product) -> Bool in
+        let nameMatch = product.Name.rangeOfString(searchText, options:
+            NSStringCompareOptions.CaseInsensitiveSearch)
+        return nameMatch != nil
+        })
+    }
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchActive = false;
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        //searchActive = false;
+    }
+
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredProducts = products.filter({ ( product: Product) -> Bool in
+            let nameMatch = product.Name.rangeOfString(searchText, options:
+                NSStringCompareOptions.CaseInsensitiveSearch)
+            return nameMatch != nil
+        })
+        if(searchText == ""){
+            searchBar.resignFirstResponder()
+            delay(0.001, { () -> () in
+                self.searchActive = false
+                searchBar.resignFirstResponder()
+                self.collectionView?.reloadData()
+            })
+            searchActive = false
+        } else {
+            searchActive = true
+            self.collectionView?.reloadData()
+        }
+    }
+    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+        searchBar.resignFirstResponder()
+        searchActive = false;
+        return true
+    }
+    
 
     // MARK: UICollectionViewDelegate
 

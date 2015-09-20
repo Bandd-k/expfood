@@ -7,11 +7,14 @@
 //
 
 import UIKit
+protocol AddIntoCartDelegate: NSObjectProtocol {
+    func addProduct()
+}
 
 class OneProductViewController: UIViewController {
     var Prod: (Product,Int)?
     var quantity: Int = 0
-    
+    weak var delegate:AddIntoCartDelegate?
     @IBOutlet weak var ToCatButton: UIButton!
     @IBOutlet weak var DescriptionLabel: UITextView!
     @IBOutlet weak var PriceLabel: UILabel!
@@ -22,9 +25,9 @@ class OneProductViewController: UIViewController {
         super.viewDidLoad()
         quantity = Prod!.1
         quantityLabel.text = "\(quantity)"
-        PriceLabel.text = "\(Prod!.0.Price)₽"
+        PriceLabel.text = "\(Prod!.0.Price)руб"
         NameLabel.text = Prod?.0.Name
-        ProductImage.image = Prod?.0.Image
+        ProductImage.kf_setImageWithURL(Prod!.0.imageUrl, placeholderImage: UIImage(named: "placeholder"))
         if(count(Prod!.0.Description) > 2){
         DescriptionLabel.text = Prod!.0.Description
         }
@@ -35,6 +38,8 @@ class OneProductViewController: UIViewController {
         if(quantity>0){
             ToCatButton.setBackgroundImage(UIImage(named:"changeQuantity.png"), forState: UIControlState.Normal)
         }else{
+            quantity = 1
+            quantityLabel.text = "\(quantity)"
             ToCatButton.setBackgroundImage(UIImage(named:"addProduct.png"), forState: UIControlState.Normal)
         }
 
@@ -48,6 +53,7 @@ class OneProductViewController: UIViewController {
     @IBAction func toCartPush(sender: AnyObject) {
         let mycart = Cart.sharedCart()
         mycart.addTocart(Prod!.0, quantity: quantity)
+        delegate?.addProduct()
         self.navigationController?.popViewControllerAnimated(true)
     }
     
