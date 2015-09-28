@@ -52,8 +52,8 @@ class FirstScreenViewController: UIViewController,UITextFieldDelegate,UIGestureR
                 let defaults = NSUserDefaults.standardUserDefaults()
                 let mycart = Cart.sharedCart()
                 mycart.user = user
-                defaults.setObject("\(self.NameField.text)", forKey: "Name")
-                defaults.setObject("\(self.PasswordField.text)", forKey: "Password")
+                //defaults.setObject("\(self.NameField.text)", forKey: "Name")
+                //defaults.setObject("\(self.PasswordField.text)", forKey: "Password")
                 self.dismissViewControllerAnimated(true, completion: nil)
                 //self.performSegueWithIdentifier("First", sender: nil)
                 // Do stuff after successful login.

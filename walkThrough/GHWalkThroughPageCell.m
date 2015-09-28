@@ -99,7 +99,7 @@
     self.descPositionY   = 180.0f;
     self.titleFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0];
     self.titleColor = [UIColor whiteColor];
-    self.descFont = [UIFont fontWithName:@"Helvetica" size:20.0];
+    self.descFont = [UIFont fontWithName:@"Helvetica" size:22.0];
     self.descColor = [UIColor whiteColor];
 }
 

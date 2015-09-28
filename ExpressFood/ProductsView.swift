@@ -69,12 +69,11 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         self.performSegueWithIdentifier("toCart", sender: nil)
     }
     func searchTapped(){
-        
         searchBar.placeholder = "Поиск"
         var leftNavBarButton = UIBarButtonItem(customView:searchBar)
         self.navigationItem.titleView = searchBar
         var textFieldInsideSearchBar = searchBar.valueForKey("searchField") as? UITextField
-        textFieldInsideSearchBar?.textColor = UIColor.appColor()
+        textFieldInsideSearchBar?.textColor = UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 1)
         definesPresentationContext = true
         searchBar.delegate = self
         
@@ -295,7 +294,7 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        //searchActive = false;
+        searchActive = true;
     }
 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {

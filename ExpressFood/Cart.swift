@@ -46,6 +46,13 @@ class Cart: NSObject {// singleton
         }
         return sum
     }
+    func cartSum() -> Double {
+        var sum:Double = 0;
+        for elem in products{
+            sum += elem.0.Price * Double(elem.1)
+        }
+        return sum
+    }
     func deleteAll(){
         products = []
     }

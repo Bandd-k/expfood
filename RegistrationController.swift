@@ -36,7 +36,6 @@ class RegistrationController: XLFormViewController {
     }
     
     func initializeForm() {
-        //self.view.tintColor = UIColor.orangeColor()
         let form : XLFormDescriptor
         var section : XLFormSectionDescriptor
         var row : XLFormRowDescriptor
@@ -115,18 +114,15 @@ class RegistrationController: XLFormViewController {
         row.cellConfig["textLabel.textColor"] = UIColor.appColor()
         row.action.formSelector = "reg:"
         section.addFormRow(row)
-        
-        
         self.form = form
         
         
     }
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         //get zone of delivery
         var query = PFQuery(className:"Radius")
         query.getObjectInBackgroundWithId("qiFXPpdUA1") {

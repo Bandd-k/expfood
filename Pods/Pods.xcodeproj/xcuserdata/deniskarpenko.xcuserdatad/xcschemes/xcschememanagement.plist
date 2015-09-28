@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-AXRatingView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-JVFloatLabeledTextField.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Kingfisher.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,32 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>02D11F3EB0F2D5C5D20125B6</key>
+		<key>0FA04236FB271B20EE9261D5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>06F9A91B12BB98270C8CB84E</key>
+		<key>21839ADA47CCC0BFDA68EBC1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>19740D9268045447CE1CC73B</key>
+		<key>25D5B2F4214802D1BFF45DC9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ADC0AADFFDD1CE402A011FBC</key>
+		<key>58C22C52397B628B61437DC2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E4014ACE2F4AE10AB8BA2516</key>
+		<key>66ABA8E47249545B99A25CD1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F3037C17FCF7259C5BA16CA6</key>
+		<key>AE5C7192C20EDEF53D898ABC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DA04759978C3CF232A41ACBA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FFFD542B949A312CC14CECD6</key>
 		<dict>
 			<key>primary</key>
 			<true/>

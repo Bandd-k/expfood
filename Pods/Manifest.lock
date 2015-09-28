@@ -1,4 +1,6 @@
 PODS:
+  - AXRatingView (1.0.3)
+  - JVFloatLabeledTextField (1.0.2)
   - Kingfisher (1.4.2)
   - SVProgressHUD (1.1.3)
   - XLForm (3.0.1)
@@ -7,12 +9,16 @@ PODS:
   - YandexMoneySDKObjc (1.1.14)
 
 DEPENDENCIES:
+  - AXRatingView (= 1.0.3)
+  - JVFloatLabeledTextField (= 1.0.2)
   - Kingfisher (~> 1.4)
   - SVProgressHUD
   - XLForm (~> 3.0.0)
   - YandexMoneySDKiOS
 
 SPEC CHECKSUMS:
+  AXRatingView: ccaadc1bbda99a4b7e1d556059482d2b933a9f4e
+  JVFloatLabeledTextField: 58a3a32cfb800e5b224f676987e7c13abf50a14d
   Kingfisher: 4446782a827abbe2e6048a1fa741924a10e6ad7c
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   XLForm: 1a20da41c009e4f99e802e886a8eef5f2b086644

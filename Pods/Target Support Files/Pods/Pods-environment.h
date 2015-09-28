@@ -6,6 +6,18 @@
 // project.
 
 
+// AXRatingView
+#define COCOAPODS_POD_AVAILABLE_AXRatingView
+#define COCOAPODS_VERSION_MAJOR_AXRatingView 1
+#define COCOAPODS_VERSION_MINOR_AXRatingView 0
+#define COCOAPODS_VERSION_PATCH_AXRatingView 3
+
+// JVFloatLabeledTextField
+#define COCOAPODS_POD_AVAILABLE_JVFloatLabeledTextField
+#define COCOAPODS_VERSION_MAJOR_JVFloatLabeledTextField 1
+#define COCOAPODS_VERSION_MINOR_JVFloatLabeledTextField 0
+#define COCOAPODS_VERSION_PATCH_JVFloatLabeledTextField 2
+
 // Kingfisher
 #define COCOAPODS_POD_AVAILABLE_Kingfisher
 #define COCOAPODS_VERSION_MAJOR_Kingfisher 1

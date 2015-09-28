@@ -48,6 +48,8 @@ code_sign() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework 'AXRatingView.framework'
+  install_framework 'JVFloatLabeledTextField.framework'
   install_framework 'Kingfisher.framework'
   install_framework 'SVProgressHUD.framework'
   install_framework 'XLForm.framework'
@@ -55,6 +57,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'YandexMoneySDKiOS.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework 'AXRatingView.framework'
+  install_framework 'JVFloatLabeledTextField.framework'
   install_framework 'Kingfisher.framework'
   install_framework 'SVProgressHUD.framework'
   install_framework 'XLForm.framework'

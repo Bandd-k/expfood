@@ -29,8 +29,13 @@
 #import "SVProgressHUD.h"
 #import "UIBarButtonItem+Badge.h"
 #import "XLForm/XLForm.h"
+#import <AXRatingView/AXRatingView.h>
+#import <JVFloatLabeledTextField/JVFloatLabeledTextField.h>
 
 
 #import "GHWalkThroughView.h"
+
+
+#import "Helpshift.h"
 
 #endif

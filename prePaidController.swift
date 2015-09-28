@@ -52,11 +52,19 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
         var house = ""
         var flat = ""
         var free = false;
+        sum = Cart.sharedCart().cartSum()
         if let currentUser = PFUser.currentUser() {
-        street = currentUser["Street"] as! String
+            if let st = currentUser["Street"] as? String{
+                street = st
+            }
+            else if let t =  currentUser["AdressField"] as? String {
+                street = deelPart(t)
+            }
         house = currentUser["house"] as! String
         flat = currentUser["flat"] as! String
-        free = currentUser["free"] as! Bool
+            if let fr = currentUser["free"] as? Bool {
+                free = fr
+            }
         }
 
         //self.view.tintColor = UIColor.orangeColor()
@@ -109,12 +117,20 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
         section = XLFormSectionDescriptor()
         form.addFormSection(section)
         section.title = "Оплата"
+        if (sum > 3000){
+            section.footerTitle = "Скидка 5% при оплате картой, при заказе дороже 3 тысяч оплата только картой"
+        }
+        else{
         section.footerTitle = "Скидка 5% при оплате картой"
+        }
         
         row = XLFormRowDescriptor(tag: Tags.SegmentedControl.rawValue, rowType: XLFormRowDescriptorTypeSelectorSegmentedControl, title: "Оплата")
         row.selectorOptions = ["карта","наличные"]
         row.value = "карта"
         section.addFormRow(row)
+        if (sum > 3000){
+            row.disabled = true
+        }
         
         row = XLFormRowDescriptor(tag: Tags.Price.rawValue, rowType: XLFormRowDescriptorTypeText, title:"Стоимость Товаров")
         row.cellConfigAtConfigure["textField.placeholder"] = "1000"
@@ -229,7 +245,7 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
             }
         }
     }
-    override func viewWillAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         if(self.pushed == 1){
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.pushed = 0
@@ -251,7 +267,7 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
         if validate(){
             var str = self.form.formRowWithTag("Street")!.value as? String!
             var str1 = self.form.formRowWithTag("House")!.value as? String!
-            var final = "Одинцово " + str! + " " + str1! // вначале валидейт!
+            var final = "Одинцово " + str! + " " + str1! 
             checkAddress(final)
         }
         self.deselectFormRow(sender)
@@ -486,6 +502,11 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
     
     //MARK: - Helperph
     
+    func deelPart(str:String)->String{
+        let fullNameArr = str.componentsSeparatedByString(",")
+        return fullNameArr[0]
+    }
+    
     func animateCell(cell: UITableViewCell) {
         let animation = CAKeyframeAnimation()
         animation.keyPath = "position.x"
@@ -496,3 +517,6 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
         animation.additive = true
         cell.layer.addAnimation(animation, forKey: "shake")
     }}
+
+
+

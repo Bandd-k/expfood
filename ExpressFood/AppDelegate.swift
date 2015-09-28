@@ -89,6 +89,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var alert = UIAlertView(title: "Отсутсвует соединение с интернетом", message: "Пожалуйста установите соединение с интернетом", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         }
+        
+        Helpshift.installForApiKey("943b0296194a2fdfba961ff77018ef7b",
+            domainName: "expfood.helpshift.com",
+            appID: "expfood_platform_20150925123405193-f7d67e0eb155fb7")
 
         // Override point for customization after application launch.
         return true

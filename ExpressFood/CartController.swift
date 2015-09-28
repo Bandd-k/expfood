@@ -22,11 +22,13 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
     @IBOutlet weak var MainTable: UITableView!
     var products:[(Product,Int)] = []
     var sum: Double = 0
+    var minPrice = 200;
     override func viewDidLoad() {
         super.viewDidLoad()
         let mycart = Cart.sharedCart()
         products = mycart.products
         sum = CalculateSum()
+        
         MakeOrderButton.frame.size.width = self.view.frame.size.width
         MainTable.frame.size.width = self.view.frame.size.width
         MakeOrderButton.titleLabel?.numberOfLines = 1;
@@ -37,8 +39,8 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             //MakeOrderButton.titleLabel?.textAlignment = NSTextAlignment.Center
             MakeOrderButton.setTitle("Добавьте товаров в корзину !", forState: UIControlState.Normal)
         }
-        else if( sum < 300 ){
-            MakeOrderButton.setTitle("Минимальный заказ 300р", forState: UIControlState.Normal)
+        else if( sum < Double(minPrice) ){
+            MakeOrderButton.setTitle("Минимальный заказ \(minPrice)р", forState: UIControlState.Normal)
         }
         //SendOrder()
         MakeOrderButton.setBackgroundImage(UIImage(named: "cartBackground.png"), forState: UIControlState.Normal)
@@ -83,8 +85,8 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
         if(products.count == 0 ){
         MakeOrderButton.setTitle("Добавьте товаров в корзину !", forState: UIControlState.Normal)
         }
-        else if( sum < 300 ){
-            MakeOrderButton.setTitle("Минимальный заказ 300р", forState: UIControlState.Normal)
+        else if( sum < Double(minPrice) ){
+            MakeOrderButton.setTitle("Минимальный заказ \(minPrice)р", forState: UIControlState.Normal)
         }
     }
     
@@ -161,11 +163,11 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             var value = products[indexPath.row].0.Price * Double(products[indexPath.row].1)
             cell.quantity.text = "\(Int(products[indexPath.row].0.Price))р x \(products[indexPath.row].1) = \(value)₽"
             if(indexPath.row == products.count-1){//отобразить цену
-                if(CalculateSum() > 300){
+                if(CalculateSum() > Double(minPrice)){
                 MakeOrderButton.setTitle("Заказать на \(Int(sum))р", forState: UIControlState.Normal)
                 }
                 else{
-                        MakeOrderButton.setTitle("Минимальный заказ 300р", forState: UIControlState.Normal)
+                        MakeOrderButton.setTitle("Минимальный заказ \(minPrice)р", forState: UIControlState.Normal)
                 }
             }
             return cell
@@ -175,7 +177,7 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
     @IBOutlet weak var Butt: UIButton!
     @IBAction func Order(sender: AnyObject) {
         self.pushed = 1
-        if(products.count != 0 && CalculateSum() > 300) {
+        if(products.count != 0 && CalculateSum() > Double(minPrice)) {
         //Яндекс Деньги !!
        // var mycntrl = YMACpsController(clientId: "1F666358D089A71E1F37577B366C184AF390FECC898C0397F29562ACAE0D5F8C",patternId: "p2p",andPaymentParams:["amount":"1","to" : "410013085842859"])
         //self.naPushViewController(mycntrl, animated: true, completion: nil)
@@ -187,7 +189,7 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             let defaults = NSUserDefaults.standardUserDefaults()
                     if PFUser.currentUser() != nil
                     {
-                        let password = defaults.stringForKey("Password")
+                        //let password = defaults.stringForKey("Password")
             performSegueWithIdentifier("toPrePaid", sender: nil)
             }
                     else{
@@ -292,7 +294,9 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             let dest = segue.destinationViewController as! prePaidController
             var free = false
             if let currentUser = PFUser.currentUser() {
-                free = currentUser["free"] as! Bool
+                if let f = currentUser["free"] as? Bool {// change
+                free = f
+                }
                 
             }
             if(!free){
