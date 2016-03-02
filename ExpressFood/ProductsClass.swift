@@ -13,7 +13,7 @@ class Product {
     var Name: String = ""
     var Price: Double = 0
     var objectId: String = ""
-    var imageUrl: NSURL
+    let imageUrl: NSURL
     //var Image: UIImage
     //var Id: String = ""
     var Imgreq : NSURLRequest?

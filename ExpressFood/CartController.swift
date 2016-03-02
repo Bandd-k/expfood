@@ -55,7 +55,7 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.pushed = 0
         let defaults = NSUserDefaults.standardUserDefaults()
-        var answer = defaults.boolForKey("PaySuccess")
+        let answer = defaults.boolForKey("PaySuccess")
         if(answer == true){//покупка успешна
             MakeOrderButton.setTitle("Добавьте товаров в корзину !", forState: UIControlState.Normal)
             SendOrder()
@@ -67,7 +67,7 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             MainTable.reloadData()
         }
         else{ //покупка Неуспешна
-            var alert = UIAlertView(title: nil, message: "Упс:( Что-то пошло не так(", delegate: self, cancelButtonTitle: "Ок")
+            let alert = UIAlertView(title: nil, message: "Упс:( Что-то пошло не так(", delegate: self, cancelButtonTitle: "Ок")
             alert.show()
         }
         }
@@ -94,9 +94,9 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     func SendOrder(){
-        var order = PFObject(className:"Orders")
+        let order = PFObject(className:"Orders")
         var ids: [String] = []
-        var relation = order.relationForKey("User")
+        let relation = order.relationForKey("User")
         let user = PFUser.currentUser()
         relation.addObject(user!)
         var quantities: [Int] = []
@@ -111,11 +111,11 @@ class CartController: UIViewController,UITableViewDataSource, UITableViewDelegat
             if (success) {
                 let defaults = NSUserDefaults.standardUserDefaults()
                 defaults.setBool(false, forKey: "PaySuccess")
-                var alert = UIAlertView(title: nil, message: "Спасибо за заказ!)", delegate: self, cancelButtonTitle: "Ок")
+                let alert = UIAlertView(title: nil, message: "Спасибо за заказ!)", delegate: self, cancelButtonTitle: "Ок")
                 alert.show()
                 // The object has been saved.
             } else {
-                var alert = UIAlertView(title: nil, message: "Упс:( Что-то пошло не так(", delegate: self, cancelButtonTitle: "Ок")
+                let alert = UIAlertView(title: nil, message: "Упс:( Что-то пошло не так(", delegate: self, cancelButtonTitle: "Ок")
                 alert.show()
                 // There was a problem, check error.description
             }

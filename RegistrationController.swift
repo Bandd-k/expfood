@@ -11,9 +11,14 @@ import XLForm
 import Parse
 import MapKit
 class RegistrationController: XLFormViewController {
-    var radius: CLLocationDistance = 3000
-    var xcord = 55.6672199781833
-    var ycord = 37.2828599531204
+    //previous
+//    var radius: CLLocationDistance = 3000
+//    var xcord = 55.6672199781833
+//    var ycord = 37.2828599531204
+    var radius: CLLocationDistance = 4720
+    var xcord = 55.7505
+    var ycord = 37.619
+    var push = false
     private enum Tags : String {
         case ValidationName = "Name"
         case ValidationEmail = "Email"
@@ -30,7 +35,7 @@ class RegistrationController: XLFormViewController {
         self.initializeForm()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.initializeForm()
     }
@@ -124,7 +129,7 @@ class RegistrationController: XLFormViewController {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         //get zone of delivery
-        var query = PFQuery(className:"Radius")
+        let query = PFQuery(className:"Radius")
         query.getObjectInBackgroundWithId("qiFXPpdUA1") {
             (object: PFObject?, error: NSError?) -> Void in
             if object != nil {
@@ -139,23 +144,26 @@ class RegistrationController: XLFormViewController {
                 }
                 
             } else {
-                println(error)
+                print(error)
             }
         }
     }
     
     func reg(sender: XLFormRowDescriptor)->(){
         if validate(){
-        var str = self.form.formRowWithTag("Street")!.value as? String!
-        var str1 = self.form.formRowWithTag("House")!.value as? String!
-        var final = "Одинцово " + str! + " " + str1! // вначале валидейт!
+            if(!push){
+                push = true
+        let str = self.form.formRowWithTag("Street")!.value as? String!
+        let str1 = self.form.formRowWithTag("House")!.value as? String!
+        let final = "Москва " + str! + " " + str1! // вначале валидейт!
         checkAddress(final)
+            }
         }
         self.deselectFormRow(sender)
     }
     func SignUp(){ //registration PArse.COM and saving Defaults !
         let defaults = NSUserDefaults.standardUserDefaults()
-        var user = PFUser()
+        let user = PFUser()
         user.username = self.form.formRowWithTag("Email")!.value as? String
         user.password = self.form.formRowWithTag("Password")!.value as? String
         user.email = self.form.formRowWithTag("Email")!.value as? String
@@ -168,9 +176,15 @@ class RegistrationController: XLFormViewController {
         user["free"] = true;
         user.signUpInBackgroundWithBlock {
             (succeeded: Bool, error: NSError?) -> Void in
+            self.push = false
             if let error = error {
-                let errorString = error.userInfo?["error"] as? NSString
-                var alert = UIAlertView(title: nil, message: "Упс:( \(errorString!)", delegate: self, cancelButtonTitle: "Ок")
+                var errorString = error.userInfo["error"] as? NSString
+                if((errorString?.hasPrefix("username")) != false){
+                    errorString = "Такой имейл уже занят"
+                }
+                
+                let alert = UIAlertView(title: nil, message: "Упс:( \(errorString!)", delegate: self, cancelButtonTitle: "Ок")
+                print(errorString)
                 alert.show()
                 // Show the errorString somewhere and let the user try again.
             } else {
@@ -200,16 +214,18 @@ class RegistrationController: XLFormViewController {
             let fullNameArr = adress.componentsSeparatedByString(" ")
             if(fullNameArr.count > 2) {
                 if localSearchResponse == nil{
+                    self.push = false
                     var alert = UIAlertView(title: nil, message: "Адрес не найден", delegate: self, cancelButtonTitle: "Попробуйте еще раз")
                     alert.show()
                     bl = false
                     return
                 }
                 let DeliveryCordinates = CLLocation(latitude: self.xcord, longitude: self.ycord)
-                println(localSearchResponse.boundingRegion.center.latitude)
-                println(localSearchResponse.boundingRegion.center.longitude)
-                let Home = CLLocation(latitude: localSearchResponse.boundingRegion.center.latitude, longitude: localSearchResponse.boundingRegion.center.longitude)
+                print(localSearchResponse!.boundingRegion.center.latitude)
+                print(localSearchResponse!.boundingRegion.center.longitude)
+                let Home = CLLocation(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude: localSearchResponse!.boundingRegion.center.longitude)
                 if(DeliveryCordinates.distanceFromLocation(Home) > self.radius){
+                    self.push = true
                     var alert = UIAlertView(title: nil, message: "К сожалению мы еще не работаем здесь ;(;(", delegate: self, cancelButtonTitle: "Ок")
                     alert.show()
                     bl = false
@@ -245,7 +261,7 @@ class RegistrationController: XLFormViewController {
         for errorItem in array {
             bl = false
             let error = errorItem as! NSError
-            let validationStatus : XLFormValidationStatus = error.userInfo![XLValidationStatusErrorKey] as! XLFormValidationStatus
+            let validationStatus : XLFormValidationStatus = error.userInfo[XLValidationStatusErrorKey] as! XLFormValidationStatus
             if validationStatus.rowDescriptor!.tag == Tags.ValidationName.rawValue {
 //                if let cell = self.tableView.cellForRowAtIndexPath(self.form.indexPathOfFormRow(validationStatus.rowDescriptor)!) {
 //                    cell.backgroundColor = UIColor.orangeColor()
@@ -264,7 +280,7 @@ class RegistrationController: XLFormViewController {
 //                    if let cell = self.tableView.cellForRowAtIndexPath(self.form.indexPathOfFormRow(validationStatus.rowDescriptor)!) {
 //                        self.animateCell(cell)
 //                    }
-                if let cell = self.tableView.cellForRowAtIndexPath(self.form.indexPathOfFormRow(validationStatus.rowDescriptor)!) {
+                if let cell = self.tableView.cellForRowAtIndexPath(self.form.indexPathOfFormRow(validationStatus.rowDescriptor!)!) {
                     cell.backgroundColor = UIColor.orangeColor()
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
                         cell.backgroundColor = UIColor.whiteColor()

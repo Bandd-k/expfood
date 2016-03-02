@@ -11,7 +11,7 @@ import UIKit
 
 class Type2 {
     var name:String = ""
-    var image:UIImage = UIImage(named: "type1.png")!
+    var image:UIImage = UIImage(named: "baby")!
     var id:String = ""
     init(Name: String, Image: String, Id: String) {
         self.name = Name

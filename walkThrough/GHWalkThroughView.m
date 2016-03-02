@@ -143,7 +143,7 @@
     self.skipButton.frame = CGRectMake(self.bounds.size.width - 80, self.pageControl.frame.origin.y - ((30 - self.pageControl.frame.size.height)/2), 80, 30);
     
     self.skipButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-    [self.skipButton setTitle:@"Skip" forState:UIControlStateNormal];
+    [self.skipButton setTitle:@"Ясно!" forState:UIControlStateNormal];
     [self.skipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.skipButton addTarget:self action:@selector(skipIntroduction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.skipButton];

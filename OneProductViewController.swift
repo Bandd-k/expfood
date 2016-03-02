@@ -27,8 +27,9 @@ class OneProductViewController: UIViewController {
         quantityLabel.text = "\(quantity)"
         PriceLabel.text = "\(Int(Prod!.0.Price)) руб"
         NameLabel.text = Prod?.0.Name
-        ProductImage.kf_setImageWithURL(Prod!.0.imageUrl, placeholderImage: UIImage(named: "placeholder"))
-        if(count(Prod!.0.Description) > 2){
+        //ProductImage.kf_setImageWithURL(Prod!.0.imageUrl, placeholderImage: UIImage(named: "placeholder"))
+        ProductImage.kf_setImageWithURL(Prod!.0.imageUrl)
+        if(Prod!.0.Description.characters.count > 2){
         DescriptionLabel.text = Prod!.0.Description
         }
         else{
@@ -47,11 +48,11 @@ class OneProductViewController: UIViewController {
     }
     func BarButton()-> UIBarButtonItem{
         
-        var but = UIButton(frame: CGRectMake(0, 0, 40, 40))
+        let but = UIButton(frame: CGRectMake(0, 0, 40, 40))
         but.addTarget(self, action: "performToCart", forControlEvents: UIControlEvents.TouchDown)
-        var img = UIImage(named: "shopping-cart")
+        let img = UIImage(named: "shopping-cart")
         but.setImage(img, forState: UIControlState.Normal)
-        var navLeft = UIBarButtonItem(customView: but)
+        let navLeft = UIBarButtonItem(customView: but)
         navLeft.badgeValue = Cart.sharedCart().cartQuantity().description
         navLeft.badgeBGColor = UIColor.orangeColor()
         navLeft.badgePadding = 3

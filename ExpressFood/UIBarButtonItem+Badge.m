@@ -101,9 +101,10 @@ NSString const *UIBarButtonItem_badgeValueKey = @"UIBarButtonItem_badgeValueKey"
     
     // Using const we make sure the badge doesn't get too smal
     minWidth = (minWidth < minHeight) ? minHeight : expectedLabelSize.width;
-    self.badge.frame = CGRectMake(self.badgeOriginX, self.badgeOriginY, minWidth + padding, minHeight + padding);
-    self.badge.layer.cornerRadius = (minHeight + padding) / 2;
     self.badge.layer.masksToBounds = YES;
+    self.badge.frame = CGRectMake(self.badgeOriginX, self.badgeOriginY, minWidth + padding, minHeight + padding);
+    self.badge.layer.cornerRadius = (minHeight + padding) / 2.0f;
+
 }
 
 // Handle the badge changing value
@@ -118,6 +119,7 @@ NSString const *UIBarButtonItem_badgeValueKey = @"UIBarButtonItem_badgeValueKey"
         [animation setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:.4f :1.3f :1.f :1.f]];
         [self.badge.layer addAnimation:animation forKey:@"bounceAnimation"];
     }
+    
     
     // Set the new value
     self.badge.text = self.badgeValue;

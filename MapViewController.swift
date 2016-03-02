@@ -34,7 +34,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         //get zone of delivery
-        var query = PFQuery(className:"Radius")
+        let query = PFQuery(className:"Radius")
         query.getObjectInBackgroundWithId("qiFXPpdUA1") {
             (object: PFObject?, error: NSError?) -> Void in
             if error == nil && object != nil {
@@ -49,7 +49,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
                 }
                 
             } else {
-                println(error)
+                print(error)
             }
         }
         self.view.userInteractionEnabled = true
@@ -66,7 +66,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
         // Present the view controller
         presentViewController(searchController, animated: true, completion: nil)
         //UITEXTFIELD ADJUSTING
-        var numLeft = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let numLeft = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         numLeft.text = "+7"
         numLeft.textColor = UIColor.grayColor()
         numLeft.font = UIFont(name: "Avenir Next Regular", size: 14)
@@ -77,26 +77,26 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
         self.NameField.leftViewMode = UITextFieldViewMode.Always
         self.PasswordField.leftViewMode = UITextFieldViewMode.Always
         
-        var emailView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
+        let emailView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
         emailView.image = UIImage(named: "email")
-        var secondview = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        let secondview = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         secondview.addSubview(emailView)
         emailField.leftView = secondview
         
-        var lockView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
+        let lockView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
         lockView.image = UIImage(named: "locked")
-        var SecndLock = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        let SecndLock = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         SecndLock.addSubview(lockView)
         PasswordField.leftView = SecndLock
-        var NameView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
+        let NameView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
         NameView.image = UIImage(named: "user")
-        var SecndName = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        let SecndName = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         SecndName.addSubview(NameView)
         NameField.leftView = SecndName
 
-        var FlatView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
+        let FlatView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
         FlatView.image = UIImage(named: "house")
-        var SecndFlat = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        let SecndFlat = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         SecndFlat.addSubview(FlatView)
         flatField.leftView = SecndFlat
         // Do any additional setup after loading the view.
@@ -119,7 +119,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
     
     func SignUp(){ //registration PArse.COM and saving Defaults !
         let defaults = NSUserDefaults.standardUserDefaults()
-        var user = PFUser()
+        let user = PFUser()
         user.username = self.emailField.text
         user.password = self.PasswordField.text
         user.email = self.emailField.text
@@ -132,8 +132,8 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
         user.signUpInBackgroundWithBlock {
             (succeeded: Bool, error: NSError?) -> Void in
             if let error = error {
-                let errorString = error.userInfo?["error"] as? NSString
-                var alert = UIAlertView(title: nil, message: "Упс:( \(errorString!)", delegate: self, cancelButtonTitle: "Ок")
+                let errorString = error.userInfo["error"] as? NSString
+                let alert = UIAlertView(title: nil, message: "Упс:( \(errorString!)", delegate: self, cancelButtonTitle: "Ок")
                 alert.show()
                 // Show the errorString somewhere and let the user try again.
             } else {
@@ -169,7 +169,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
         searchBar.resignFirstResponder()
         dismissViewControllerAnimated(true, completion: nil)
         if self.mapView.annotations.count != 0{
-            annotation = self.mapView.annotations[0] as! MKAnnotation
+            annotation = self.mapView.annotations[0] 
             self.mapView.removeAnnotation(annotation)
         }
         //2
@@ -177,7 +177,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
         localSearchRequest.naturalLanguageQuery = searchBar.text
         localSearch = MKLocalSearch(request: localSearchRequest)
         localSearch.startWithCompletionHandler { (localSearchResponse, error) -> Void in
-            let fullNameArr = searchBar.text.componentsSeparatedByString(" ")
+            let fullNameArr = searchBar.text!.componentsSeparatedByString(" ")
             if(fullNameArr.count > 2) {
             
             if localSearchResponse == nil{
@@ -190,7 +190,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
 
             self.pointAnnotation = MKPointAnnotation()
             self.pointAnnotation.title = searchBar.text
-            self.pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse.boundingRegion.center.latitude, longitude:     localSearchResponse.boundingRegion.center.longitude)
+            self.pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude:     localSearchResponse!.boundingRegion.center.longitude)
             
             let dormitoryCordinates = CLLocation(latitude: self.xcord, longitude: self.ycord)// center of our delivery
                 //latutude = x , longitude = y
@@ -202,7 +202,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
                 regionRadius * 2.0, regionRadius * 2.0), animated: true)
             self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: nil)
             //self.mapView.centerCoordinate = self.pointAnnotation.coordinate
-            self.mapView.addAnnotation(self.pinAnnotationView.annotation)
+            self.mapView.addAnnotation(self.pinAnnotationView.annotation!)
             if(dormitoryCordinates.distanceFromLocation(Home) > self.radius){
                 var alert = UIAlertView(title: nil, message: "К сожалению мы еще не работаем здесь ;(;(", delegate: self, cancelButtonTitle: "Ок")
                 alert.show()
@@ -210,7 +210,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
             else{
                 var alert = UIAlertView(title: nil, message: "Вам повезло, мы работаем у вас в районе !:)", delegate: self, cancelButtonTitle: "Продолжить регистрацию")
                 alert.show()
-                self.adrees = searchBar.text
+                self.adrees = searchBar.text!
                 self.NameField.hidden = false
                 self.emailField.hidden = false
                 self.flatField.hidden = false
@@ -267,7 +267,7 @@ class MapViewController: UIViewController, UISearchBarDelegate,UITextFieldDelega
     func animateField(textField : UITextField, up : Bool){// function which move screen when keyboard appears
         let movementDistance = -150
         let movementDuratation = 0.3
-        var movement = (up ? movementDistance : -movementDistance)
+        let movement = (up ? movementDistance : -movementDistance)
         UIView.beginAnimations("animateField", context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
         UIView.setAnimationDuration(movementDuratation)

@@ -12,6 +12,7 @@ class FirstScreenViewController: UIViewController,UITextFieldDelegate,UIGestureR
 
     @IBOutlet weak var NameField: UITextField!
     @IBOutlet weak var PasswordField: UITextField!
+    var push = false
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -19,7 +20,7 @@ class FirstScreenViewController: UIViewController,UITextFieldDelegate,UIGestureR
         let tap = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
         tap.delegate = self
         self.view.addGestureRecognizer(tap)
-        var button = UIButton(frame: CGRectMake(15, 25, 30, 30))
+        let button = UIButton(frame: CGRectMake(15, 25, 30, 30))
         button.setImage(UIImage(named: "cancelReg"), forState: UIControlState.Normal)
         button.addTarget(self, action: "EnterCancel", forControlEvents: UIControlEvents.TouchDown)
         self.view.addSubview(button)
@@ -45,10 +46,12 @@ class FirstScreenViewController: UIViewController,UITextFieldDelegate,UIGestureR
         // Dispose of any resources that can be recreated.
     }
     @IBAction func Enter(sender: AnyObject) {
-        
-        PFUser.logInWithUsernameInBackground(NameField.text, password:PasswordField.text) {
+        if(!push){
+            push = true
+        PFUser.logInWithUsernameInBackground(NameField.text!, password:PasswordField.text!) {
             (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
+                self.push = true
                 let defaults = NSUserDefaults.standardUserDefaults()
                 let mycart = Cart.sharedCart()
                 mycart.user = user
@@ -58,12 +61,15 @@ class FirstScreenViewController: UIViewController,UITextFieldDelegate,UIGestureR
                 //self.performSegueWithIdentifier("First", sender: nil)
                 // Do stuff after successful login.
             } else {
-                let errorString = error!.userInfo?["error"] as? NSString
+                self.push = false
+                let errorString = error!.userInfo["error"] as? NSString
                 var alert = UIAlertView(title: nil, message: "Упс:( \(errorString!)", delegate: self, cancelButtonTitle: "Ок")
                 alert.show()
                 // The login failed. Check error to see why.
             }
         }
+        }
+
         
     }
     

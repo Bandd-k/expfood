@@ -25,14 +25,14 @@ class Cart: NSObject {// singleton
         }
     }
     func deleteFromCart(Prod: Product){
-        for (index,elem) in enumerate(products){
+        for (index,elem) in products.enumerate(){
             if(elem.0.objectId == Prod.objectId){
                 products.removeAtIndex(index)
             }
         }
     }
     func In(Prod: Product) ->Int{
-        for (index,elem) in enumerate(products){
+        for (index,elem) in products.enumerate(){
             if(elem.0.objectId == Prod.objectId){
                 return index
             }

@@ -6,7 +6,7 @@ use_frameworks!
 
 pod 'YandexMoneySDKiOS'
 pod 'SVProgressHUD'
-pod 'Kingfisher', '~> 1.4'
+pod 'Kingfisher', '~> 1.6'
 pod 'XLForm', '~> 3.0.0'
 pod 'JVFloatLabeledTextField', '1.0.2', :inhibit_warnings => true
 pod 'AXRatingView', '1.0.3', :inhibit_warnings => true

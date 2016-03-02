@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor.appColor()
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]//!!
-            UIApplication.sharedApplication().statusBarStyle = .LightContent
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
         UISearchBar.appearance().barTintColor = UIColor.appColor()
         UISearchBar.appearance().tintColor = UIColor.appColor()// previous application had white
 
@@ -38,9 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         //change root controller
-//        let defaults = NSUserDefaults.standardUserDefaults()
+//
 //        if let name = defaults.stringForKey("Name")
 //        {
+        //let defaults = NSUserDefaults.standardUserDefaults()
 //            let password = defaults.stringForKey("Password")
 //            self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 //            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -81,12 +82,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
 //        }
         if Reachability.isConnectedToNetwork() == true {
-            println("Internet connection OK")
+            print("Internet connection OK")
         } else {
             let mycart = Cart.sharedCart()
             mycart.internet = false
-            println("Internet connection FAILED")
-            var alert = UIAlertView(title: "Отсутсвует соединение с интернетом", message: "Пожалуйста установите соединение с интернетом", delegate: nil, cancelButtonTitle: "OK")
+            print("Internet connection FAILED")
+            let alert = UIAlertView(title: "Отсутсвует соединение с интернетом", message: "Пожалуйста установите соединение с интернетом", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         }
         

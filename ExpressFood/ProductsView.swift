@@ -24,10 +24,10 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         super.viewDidLoad()
         //self.navigationItem.title = tp
         //ParseLoadData()
-        println("Hello")
+        print("Hello")
         //set cell size
-        var size = (self.view.bounds.width-8) / 3
-        var test: UICollectionViewFlowLayout = self.collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
+        let size = (self.view.bounds.width-8) / 3
+        let test: UICollectionViewFlowLayout = self.collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         test.itemSize =  CGSizeMake(size,size+100)
         // search controller
         navigationItem.rightBarButtonItem = BarButton()
@@ -54,11 +54,11 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
     
     func BarButton()-> UIBarButtonItem{
         
-        var but = UIButton(frame: CGRectMake(0, 0, 40, 40))
+        let but = UIButton(frame: CGRectMake(0, 0, 40, 40))
         but.addTarget(self, action: "performToCart", forControlEvents: UIControlEvents.TouchDown)
-        var img = UIImage(named: "shopping-cart")
+        let img = UIImage(named: "shopping-cart")
         but.setImage(img, forState: UIControlState.Normal)
-        var navLeft = UIBarButtonItem(customView: but)
+        let navLeft = UIBarButtonItem(customView: but)
         navLeft.badgeValue = Cart.sharedCart().cartQuantity().description
         navLeft.badgeBGColor = UIColor.orangeColor()
         navLeft.badgePadding = 3
@@ -72,7 +72,7 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         searchBar.placeholder = "Поиск"
         var leftNavBarButton = UIBarButtonItem(customView:searchBar)
         self.navigationItem.titleView = searchBar
-        var textFieldInsideSearchBar = searchBar.valueForKey("searchField") as? UITextField
+        let textFieldInsideSearchBar = searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 1)
         definesPresentationContext = true
         searchBar.delegate = self
@@ -124,7 +124,15 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
             //let cell = collectionView.cellForItemAtIndexPath(indexPath) as! ProdCell
             //2 configurate
         cell.prod = filteredProducts[indexPath.row]
-        cell.Image.kf_setImageWithURL(filteredProducts[indexPath.row].imageUrl, placeholderImage: UIImage(named: "placeholder"))
+            cell.Image.kf_showIndicatorWhenLoading = true
+            cell.Image.kf_setImageWithURL(filteredProducts[indexPath.row].imageUrl, placeholderImage: nil,
+                optionsInfo: [.Transition: ImageTransition.Fade(0.3)],
+                progressBlock: { (receivedSize, totalSize) -> () in
+                    //print("\(indexPath.row + 1): \(receivedSize)/\(totalSize)")
+                }) { (image, error, cacheType, imageURL) -> () in
+                    //print("\(indexPath.row + 1): Finished")
+            }
+
         cell.NameLabel.text = filteredProducts[indexPath.row].Name
         cell.PriceLabel.text = "\(Int(filteredProducts[indexPath.row].Price))руб - \(Double(filteredProducts[indexPath.row].weight))г"
         //cell.PriceLabel.text = "бр"
@@ -148,7 +156,16 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         //let cell = collectionView.cellForItemAtIndexPath(indexPath) as! ProdCell
         //2 configurate
         cell.prod = products[indexPath.row]
-        cell.Image.kf_setImageWithURL(products[indexPath.row].imageUrl, placeholderImage: UIImage(named: "placeholder"))
+        //cell.Image.kf_setImageWithURL(URL, placeholderImage: UIImage(named: "placeholder"))
+            cell.Image.kf_showIndicatorWhenLoading = true
+            cell.Image.kf_setImageWithURL(products[indexPath.row].imageUrl, placeholderImage: nil,
+                optionsInfo: [.Transition: ImageTransition.Fade(0.3)],
+                progressBlock: { (receivedSize, totalSize) -> () in
+                    //print("\(indexPath.row + 1): \(receivedSize)/\(totalSize)")
+                }) { (image, error, cacheType, imageURL) -> () in
+                    //print("\(indexPath.row + 1): Finished")
+            }
+            //print(products[indexPath.row].imageUrl)
         cell.NameLabel.text = products[indexPath.row].Name
         cell.PriceLabel.text = "\(Int(products[indexPath.row].Price))руб - \(Double(products[indexPath.row].weight))г"
         //cell.PriceLabel.text = "бр"
@@ -305,7 +322,7 @@ class ProductsView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         })
         if(searchText == ""){
             searchBar.resignFirstResponder()
-            delay(0.001, { () -> () in
+            delay(0.001, closure: { () -> () in
                 self.searchActive = false
                 searchBar.resignFirstResponder()
                 self.collectionView?.reloadData()

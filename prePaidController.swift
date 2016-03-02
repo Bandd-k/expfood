@@ -11,16 +11,16 @@ import XLForm
 import MapKit
 import Parse
 
-class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
+class prePaidController: XLFormViewController {
     var sum: Double = 350
     var secondSum: Double = 350
     var delivery: Double = 100
-    var radius: CLLocationDistance = 3000
+    var radius: CLLocationDistance = 4720
     var hour = 0
     var minutes = 0
     var pushed = 0
-    var xcord = 55.6672199781833
-    var ycord = 37.2828599531204
+    var xcord = 55.7505
+    var ycord = 37.619
     private enum Tags : String {
         case ValidationName = "Name"
         case ValidationEmail = "Email"
@@ -42,7 +42,7 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
         self.initializeForm()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.initializeForm()
     }
@@ -171,14 +171,14 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
         row.cellConfigAtConfigure["textField.textAlignment"] = NSTextAlignment.Right.rawValue
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute, fromDate: date)
+        let components = calendar.components([.Hour, .Minute], fromDate: date)
         hour = components.hour
         minutes = components.minute
-        if hour < 23 && hour > 9 {
+        if hour < 22 && hour > 10 {
         row.value = (hour+1).description + ":" + minutes.description
         }
         else {
-            row.value = "10:00"
+            row.value = "11:00"
         }
         row.disabled = true
         section.addFormRow(row)
@@ -207,17 +207,17 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
     func updateTime(){
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute, fromDate: date)
+        let components = calendar.components([.Hour, .Minute], fromDate: date)
         let hourNow = components.hour
         let minutesNow = components.minute
         if minutesNow != minutes {
             hour = hourNow
             minutes = minutesNow
-            if hourNow < 23 && hourNow > 9 {
+            if hourNow < 22 && hourNow > 10 {
             self.form.formRowWithTag("time")!.value = (hourNow+1).description + ":" + minutesNow.description
             }
             else {
-                self.form.formRowWithTag("time")!.value = "10:00"
+                self.form.formRowWithTag("time")!.value = "11:00"
             }
             self.tableView.reloadData()
         }
@@ -226,7 +226,7 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         form.delegate = self
-        var query = PFQuery(className:"Radius")
+        let query = PFQuery(className:"Radius")
         query.getObjectInBackgroundWithId("qiFXPpdUA1") {
             (object: PFObject?, error: NSError?) -> Void in
             if object != nil {
@@ -241,7 +241,7 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
                 }
                 
             } else {
-                println(error)
+                print(error)
             }
         }
     }
@@ -250,13 +250,13 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.pushed = 0
             let defaults = NSUserDefaults.standardUserDefaults()
-            var answer = defaults.boolForKey("PaySuccess")
+            let answer = defaults.boolForKey("PaySuccess")
             if(answer == true){//покупка успешна
                 SendOrder("true")
 
             }
             else{ //покупка Неуспешна
-                var alert = UIAlertView(title: nil, message: "Заказ не сделан", delegate: self, cancelButtonTitle: "Ок")
+                let alert = UIAlertView(title: nil, message: "Заказ не сделан", delegate: self, cancelButtonTitle: "Ок")
                 alert.show()
             }
         }
@@ -265,16 +265,16 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
     
     func reg(sender: XLFormRowDescriptor)->(){
         if validate(){
-            var str = self.form.formRowWithTag("Street")!.value as? String!
-            var str1 = self.form.formRowWithTag("House")!.value as? String!
-            var final = "Одинцово " + str! + " " + str1! 
+            let str = self.form.formRowWithTag("Street")!.value as? String!
+            let str1 = self.form.formRowWithTag("House")!.value as? String!
+            let final = "Москва " + str! + " " + str1!
             checkAddress(final)
         }
         self.deselectFormRow(sender)
     }
     func SignUp(){ //registration PArse.COM and saving Defaults !
         let defaults = NSUserDefaults.standardUserDefaults()
-        var user = PFUser()
+        let user = PFUser()
         user.username = self.form.formRowWithTag("Email")!.value as? String
         user.password = self.form.formRowWithTag("Password")!.value as? String
         user.email = self.form.formRowWithTag("Email")!.value as? String
@@ -288,8 +288,8 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
         user.signUpInBackgroundWithBlock {
             (succeeded: Bool, error: NSError?) -> Void in
             if let error = error {
-                let errorString = error.userInfo?["error"] as? NSString
-                var alert = UIAlertView(title: nil, message: "Упс:( \(errorString!)", delegate: self, cancelButtonTitle: "Ок")
+                let errorString = error.userInfo["error"] as? NSString
+                let alert = UIAlertView(title: nil, message: "Упс:( \(errorString!)", delegate: self, cancelButtonTitle: "Ок")
                 alert.show()
                 // Show the errorString somewhere and let the user try again.
             } else {
@@ -325,9 +325,9 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
                     return
                 }
                 let DeliveryCordinates = CLLocation(latitude: self.xcord, longitude: self.ycord)
-                println(localSearchResponse.boundingRegion.center.latitude)
-                println(localSearchResponse.boundingRegion.center.longitude)
-                let Home = CLLocation(latitude: localSearchResponse.boundingRegion.center.latitude, longitude: localSearchResponse.boundingRegion.center.longitude)
+                print(localSearchResponse!.boundingRegion.center.latitude)
+                print(localSearchResponse!.boundingRegion.center.longitude)
+                let Home = CLLocation(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude: localSearchResponse!.boundingRegion.center.longitude)
                 if(DeliveryCordinates.distanceFromLocation(Home) > self.radius){
                     var alert = UIAlertView(title: nil, message: "К сожалению мы еще не работаем здесь ;(;(", delegate: self, cancelButtonTitle: "Ок")
                     alert.show()
@@ -389,7 +389,7 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
         var num=0
         var new = a
         let DotMark: Character = "."
-        for i in a{
+        for i in a.characters{
             if( i == DotMark){
                 flag = true
             }
@@ -410,7 +410,7 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
         for errorItem in array {
             bl = false
             let error = errorItem as! NSError
-            let validationStatus : XLFormValidationStatus = error.userInfo![XLValidationStatusErrorKey] as! XLFormValidationStatus
+            let validationStatus : XLFormValidationStatus = error.userInfo[XLValidationStatusErrorKey] as! XLFormValidationStatus
             if
                 validationStatus.rowDescriptor!.tag == Tags.ValidationStreet.rawValue ||
                 validationStatus.rowDescriptor!.tag == Tags.ValidationHouse.rawValue ||
@@ -419,7 +419,7 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
                 //                    if let cell = self.tableView.cellForRowAtIndexPath(self.form.indexPathOfFormRow(validationStatus.rowDescriptor)!) {
                 //                        self.animateCell(cell)
                 //                    }
-                if let cell = self.tableView.cellForRowAtIndexPath(self.form.indexPathOfFormRow(validationStatus.rowDescriptor)!) {
+                if let cell = self.tableView.cellForRowAtIndexPath(self.form.indexPathOfFormRow(validationStatus.rowDescriptor!)!) {
                     cell.backgroundColor = UIColor.orangeColor()
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
                         cell.backgroundColor = UIColor.whiteColor()
@@ -433,14 +433,14 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
     
     func SendOrder(s:String){
         
-        var order = PFObject(className:"Orders")
+        let order = PFObject(className:"Orders")
         var ids: [String] = []
-        var relation = order.relationForKey("User")
+        let relation = order.relationForKey("User")
         let user = PFUser.currentUser()
         relation.addObject(user!)
         var quantities: [Int] = []
         let mycart = Cart.sharedCart()
-        var products = mycart.products
+        let products = mycart.products
         for elem in products{
             ids.append(elem.0.objectId)
             quantities.append(elem.1)
@@ -448,9 +448,12 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
         order["paid"] = s
         order["productsId"] = ids
         order["quantity"] = quantities
+        let strr = self.form.formRowWithTag("sum")!.value as! String
+        order["sum"] = strr
         if self.form.formRowWithTag("notes")?.value != nil {
         order["notes"] = self.form.formRowWithTag("notes")!.value as? String
         }
+        PFCloud.callFunctionInBackground("SMS", withParameters: ["number" : "+79851480904"])
         order.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
@@ -458,16 +461,17 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
                     user["free"] = false
                     user.saveInBackground()
                 }
+                
                 let defaults = NSUserDefaults.standardUserDefaults()
                 defaults.setBool(false, forKey: "PaySuccess")
-                var alert = UIAlertView(title: nil, message: "Спасибо за заказ!)", delegate: self, cancelButtonTitle: "Ок")
+                let alert = UIAlertView(title: nil, message: "Спасибо за заказ!)", delegate: self, cancelButtonTitle: "Ок")
                 alert.show()
                 Cart.sharedCart().deleteAll()
                 Cart.sharedCart().ordered = true
                 self.dismissViewControllerAnimated(true, completion: nil)
                 // The object has been saved.
             } else {
-                var alert = UIAlertView(title: nil, message: "Заказ не сделан", delegate: self, cancelButtonTitle: "Ок")
+                let alert = UIAlertView(title: nil, message: "Заказ не сделан", delegate: self, cancelButtonTitle: "Ок")
                 alert.show()
                 // There was a problem, check error.description
             }
@@ -496,9 +500,7 @@ class prePaidController: XLFormViewController,XLFormDescriptorDelegate {
             }
         }
     }
-    
-   
-    
+
     
     //MARK: - Helperph
     
